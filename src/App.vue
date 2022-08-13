@@ -6,9 +6,7 @@
 	<router-view/> -->
 	<nav class="navbar navbar-expand-lg bg-light">
 		<div class="container-fluid">
-			<a class="navbar-brand" href="#">
-				<img src="/images/logo.png" alt="" width="150"  />
-			</a>
+			<router-link class="navbar-brand ms-4" to="/"><img src="/images/logo.png" alt="" width="150"  /></router-link>
 			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
@@ -50,16 +48,17 @@
 		</div>
 	</div>
 	<div class="container-fluid">
-		<div class="row">
+			<div class="row">
 			<div class="col-md-4 col-lg-3 col-xl-2 px-0">
 				<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Buscar empleo</a></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Lista de empresas</a></p>
-					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Preguntas frecuentes</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" to="/buscador">Buscar empleo</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'listaEmpresas'}">Lista de empresas</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem pb-4"><router-link class="text-decoration-none" :to="{name: 'PreguntasPostulante'}">Preguntas frecuentes</router-link></p>
 				</div>
 				<div class="encabezado py-2 px-3"> Candidatos </div>
 				<div>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCuenta'}">Crear cuenta</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Ingresar currículum</a></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Modificar currículum</a></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar currículum</a></p>
@@ -79,40 +78,51 @@
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Pregutnas frecuentes</a></p>
 				</div>
 			</div>
-			<div class="col-md-8 col-lg-9 col-xl-10">
-				<h1 class="text-center my-2 mt-4">Bienvenido a Capital de Trabajo</h1>
-				<h2 class="text-center my-2 text-secondary">Trabajo para todos los peruanos</h2>
-				<div class="container">
-					<div class="row row-cols-2">
-						<div class="col">
-							<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
-							<p class="p-3">Capital de Trabajo es la puerta de acceso al mercado de trabajo en internet. ¡Encuentre trabajo ya! Podrá consultar nuestro directorio de empresas, y buscar empleo en nuestra bolsa de trabajo on-line.</p>
-							<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Ver empleos</button></div>
-						</div>
-						<div class="col">
-							<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
-							<p class="p-3">Agregue su currículum gratis a nuestra base de datos y dese a conocer a cientos de empresas de todo el país. Además le regalaremos una página web gratis para poder tener acceso a su currículum desde internet.</p>
-							<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Subir CV</button></div>
+			<div class="col-md-8 col-lg-9 col-xl-10 p-3">
+				<router-view></router-view>
+				<footer>
+				<div class="row mt-5 p-4">
+					<div class="col">
+						<p>INSTITUCIONAL</p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">¿Quiénes somos?</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Contacto para personas</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Aviso legal y privacidad</a></p>
+					</div>
+					<div class="col">
+						<p>CANDIDATOS</p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Preguntas frecuentes</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Empleos por categoría</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Empleos por departamento</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Empleos por industria</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Prueba de aptitudes</a></p>
+					</div>
+					<div class="col">
+						<p>RECLUTADORES</p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Preguntas frecuentes de empresa</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Contacto para empresas</a></p>
+						<p class="mb-0"><a href="#" class="text-decoration-none text-secondary">Buscar candidatos</a></p>
 
+					</div>
+					<div class="col">
+						<div class=" d-flex ">
+							<div class="redondeo mx-2"><a href="#"><i class="bi bi-facebook"></i></a></div>
+							<div class="redondeo mx-2"><a href="#"><i class="bi bi-twitter"></i></a></div>
+							<div class="redondeo mx-2"><a href="#"><i class="bi bi-instagram"></i></a></div>
+						</div>
+						<div class="w-50 mt-3">
+							<center><img src="<%= BASE_URL %>/images/google-play.svg" alt=""></center>
 						</div>
 					</div>
-					<div class="row row-cols-2 mt-4">
-						<div class="col">
-							<div class="encabezado py-2 px-3"> Ofertas en su correo </div>
-							<p class="p-3">Suscríbase a nuestra bolsa de trabajo y todas las semanas le enviaremos gratuitamente a su buzón de correo electrónico el listado con las nuevas ofertas de empleo que salgan publicadas en Capital de Trabajo.</p>
-							<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Suscribirme</button></div>
-						</div>
-						<div class="col">
-							<div class="encabezado py-2 px-3"> Publicar aviso </div>
-							<p class="p-3">En Capital de Trabajo su empresa podrá publicar todas sus ofertas de empleo gratis, crear una página web con los datos de su empresa , y buscar entre miles de currículos a los mejores profesionales del país.</p>
-							<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Publicar aviso</button></div>
-
-						</div>
-					</div>
+						
 				</div>
+				<hr>
+				<p class="text-center">Copyright 2022</p>
+			</footer>
 			</div>
 		</div>
+			
 	</div>
+	
 </template>
 
 <script>
@@ -177,4 +187,20 @@ background: linear-gradient(69deg, rgba(35,102,255,1) 0%, rgba(0,212,255,1) 100%
 .btn-primary{
 	background-color:#3452FE;
 }
+footer a:hover{
+	color: #354242!important;
+}
+footer i{font-size: 1.4rem;}
+.redondeo{border: 1px solid #cdcdcd;
+	width: 40px;
+	height: 40px;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	border-radius: 50%;
+	align-items: center;
+}
+.redondeo>a{color: #6c6c6c!important;}
+hr{color:#545454}
+.navbar-brand{cursor:pointer;}
 </style>

@@ -10,6 +10,9 @@ const routes = [
 		path: '/buscador', name: 'Buscador', component: Buscador
 	},
 	{
+		path: '/login', name: 'login', component: () => import('../views/login.vue')
+	},
+	{
 		path: '/lista/empresas', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
 	},
 	{

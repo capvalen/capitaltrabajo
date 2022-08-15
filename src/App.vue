@@ -110,7 +110,7 @@
 							<div class="redondeo mx-2"><a href="#"><i class="bi bi-instagram"></i></a></div>
 						</div>
 						<div class="w-50 mt-3">
-							<center><img src="<%= BASE_URL %>/images/google-play.svg" alt=""></center>
+							<center><img src="images/google-play.svg" alt=""></center>
 						</div>
 					</div>
 						

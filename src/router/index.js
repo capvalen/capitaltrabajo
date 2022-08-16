@@ -9,17 +9,21 @@ const routes = [
 	{
 		path: '/buscador', name: 'Buscador', component: Buscador
 	},
+	
 	{
-		path: '/login', name: 'login', component: () => import('../views/login.vue')
+		path: '/empresas/lista', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
 	},
 	{
-		path: '/lista/empresas', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
+		path: '/empresas/publicar', name: 'publicar', component: () => import('../views/Empresa/publicar.vue')
 	},
 	{
 		path: '/preguntas-frecuentes', name: 'PreguntasPostulante', component: () => import('../views/Candidato/preguntas.vue')
 	},
 	{
-		path: '/candidato/crear', name: 'crearCuenta', component: () => import('../views/Candidato/crearCuenta.vue')
+		path: '/candidato/login', name: 'loginCandidato', component: () => import('../views/Candidato/login.vue')
+	},
+	{
+		path: '/candidato/crearCV', name: 'crearCV', component: () => import('../views/Candidato/crearCV.vue')
 	},
 ]
 

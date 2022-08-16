@@ -1,8 +1,8 @@
 <template>
 
 	<div class="row row-cols-2">
-		<div class="col">
-			<img src="images/loginLeft.png" alt="">
+		<div class="col text-center">
+			<img src="../../../public/images/loginLeft.png" alt="">
 		</div>
 		<div class="col-4 p-5">
 			<h2>Inicie sesión</h2>
@@ -27,10 +27,10 @@
 			<input type="password" class="form-control mb-3">
 			<button class="btn btn-primary">Entrar a la plataforma</button>
 			<hr>
-			<p>Si Ud. es empresa puede ingrese desde <a href="#">acá</a></p>
+			<p>Si Ud. es empresa puede ingresar desde <a href="#">acá</a></p>
 			<hr>
 			<p>También puede utilizar la app en:</p>
-			<center><img src="images/google-play.svg" alt=""></center>
+			<center><img src="../../../public/images/google-play.svg" alt=""></center>
 		</div>
 
 	</div>

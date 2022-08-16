@@ -1,7 +1,96 @@
 <template>
 <div class="container">
-	<h4 class="text-muted">Registro de datos pesonales</h4>
+	<h4 class="text-muted">Datos personales</h4>
 	<div class="container">
+		<div class="row my-2">
+			<div class="col-2">Nombres</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">Apellidos</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">D.N.I.</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">Celular</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">¿Qué edad tiene?</div>
+			<div class="col">
+				<input type="number">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">Correo electrónico</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">Página web personal</div>
+			<div class="col">
+				<input type="text">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">11. Sexo</div>
+			<div class="col">
+				<select id="">
+					<option value="1">Varón</option>
+					<option value="2">Mujer</option>
+				</select>
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">12. Estado civil</div>
+			<div class="col">
+				<select id="">
+					<option value="1">Soltero(a)</option>
+					<option value="2">Casado(a)</option>
+					<option value="2">Divorciado(a)</option>
+					<option value="2">Viudo(a)</option>
+				</select>
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">13. Su nacionalidad</div>
+			<div class="col">
+				<select id="">
+					<option value="1">Peruano</option>
+					<option value="2">Extranjero</option>
+				</select>
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-10">Describa brevemente sus habilidades principales, destrezas y/o fortalezas.</div>
+			<div class="col-10">
+				<textarea cols="3" rows="3" style="width:50%;"></textarea>
+			</div>
+		</div>
+		
+
+	</div>
+
+	<h4 class="text-muted">Crear Currículum Vitae</h4>
+	<div class="container">
+		<div class="row my-2">
+			<div class="col-10">Título de presentación, por ejemplo: <span class="fst-italic">"Programador", "Secretaria Bilíngüe", "Ingeniero Petroquímico"</span></div>
+			<div class="col-10">
+				<input type="text" style="width:50%;">
+			</div>
+		</div>
 		<div class="row my-2">
 			<div class="col-2">1. Lugar de residencia</div>
 			<div class="col">
@@ -13,12 +102,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="row my-2">
-			<div class="col-2">2. ¿Qué edad tiene?</div>
-			<div class="col">
-				<input type="number">
-			</div>
-		</div>
+		
 		<div class="row my-2">
 			<div class="col-2">3. ¿Puede conducir?</div>
 			<div class="col">
@@ -98,35 +182,7 @@
 				</select>
 			</div>
 		</div>
-		<div class="row my-2">
-			<div class="col-2">11. Sexo</div>
-			<div class="col">
-				<select id="">
-					<option value="1">Varón</option>
-					<option value="2">Mujer</option>
-				</select>
-			</div>
-		</div>
-		<div class="row my-2">
-			<div class="col-2">12. Estado civil</div>
-			<div class="col">
-				<select id="">
-					<option value="1">Soltero(a)</option>
-					<option value="2">Casado(a)</option>
-					<option value="2">Divorciado(a)</option>
-					<option value="2">Viudo(a)</option>
-				</select>
-			</div>
-		</div>
-		<div class="row my-2">
-			<div class="col-2">13. Su nacionalidad</div>
-			<div class="col">
-				<select id="">
-					<option value="1">Peruano</option>
-					<option value="2">Extranjero</option>
-				</select>
-			</div>
-		</div>
+		
 		<div class="row my-2">
 			<div class="col-2">14. Expectativas salariales</div>
 			<div class="col">
@@ -324,6 +380,17 @@
 							</label>
 						</div>
 					</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="col">18. Puede adjuntar un documento extra</div>
+				<div class="col">
+					<input type="file">
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="col d-flex justify-content-center"><button class="btn btn-outline-primary"><i class="bi bi-cloud-plus"></i> Enviar currículum</button></div>
 			</div>
 
 

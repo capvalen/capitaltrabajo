@@ -58,14 +58,14 @@
 				</div>
 				<div class="encabezado py-2 px-3"> Candidatos </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCuenta'}">Crear cuenta</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Ingresar currículum</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginCandidato'}">Registrarse</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCV'}">Ingresar currículum</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Modificar currículum</a></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar currículum</a></p>
 				</div>
 				<div class="encabezado py-2 px-3"> Envío de ofertas </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Oferta nueva</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'publicar'}">Oferta nueva</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Modificar oferta</a></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar oferta</a></p>
 				</div>
@@ -110,7 +110,7 @@
 							<div class="redondeo mx-2"><a href="#"><i class="bi bi-instagram"></i></a></div>
 						</div>
 						<div class="w-50 mt-3">
-							<center><img src="images/google-play.svg" alt=""></center>
+							<center><img src="../public/images/google-play.svg" alt=""></center>
 						</div>
 					</div>
 						

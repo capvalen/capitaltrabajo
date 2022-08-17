@@ -62,19 +62,19 @@
 		<div class="encabezado py-2 px-3 my-3"> Últimos avisos </div>
 		<table class="table table-hover table-borderless table-sm">
 			<tbody>
-				<tr>
+				<tr @click="verAviso(1)">
 						<th scope="row">1</th>
 						<td>11/02/2022</td>
 						<td>BDA MySQL Server</td>
 						<td>Todo el país</td>
 				</tr>
-				<tr>
+				<tr @click="verAviso(1)">
 					<th scope="row">2</th>
 					<td>10/02/2022</td>
 					<td>Periodista</td>
 					<td>Todo el país</td>
 				</tr>
-				<tr>
+				<tr @click="verAviso(1)">
 					<th scope="row">3</th>
 					<td>10/02/2022</td>
 					<td>Teleoperadora</td>
@@ -102,6 +102,11 @@ export default{
 				{cantidad:43, nombre: 'Loreto'},{cantidad:74, nombre: 'Madre de Dios'},{cantidad:43, nombre: 'Moquegua'},{cantidad:38, nombre: 'Pasco'},{cantidad:28, nombre: 'Piura'},{cantidad:46, nombre: 'Puno'},
 				{cantidad:41, nombre: 'San Martín'},{cantidad:28, nombre: 'Tacna'},{cantidad:26, nombre: 'Tumbes'},{cantidad:11, nombre: 'Ucayali'}
 				]
+		}
+	},
+	methods:{
+		verAviso(id){
+			this.$router.push({name: 'verAviso', params:{ id }})
 		}
 	}
 }

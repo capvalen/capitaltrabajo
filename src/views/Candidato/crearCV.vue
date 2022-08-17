@@ -83,7 +83,7 @@
 
 	</div>
 
-	<h4 class="text-muted">Crear Currículum Vitae</h4>
+	<h4 class="text-muted">Datos de Currículum Vitae</h4>
 	<div class="container">
 		<div class="row my-2">
 			<div class="col-10">Título de presentación, por ejemplo: <span class="fst-italic">"Programador", "Secretaria Bilíngüe", "Ingeniero Petroquímico"</span></div>

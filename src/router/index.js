@@ -14,7 +14,10 @@ const routes = [
 		path: '/empresas/lista', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
 	},
 	{
-		path: '/empresas/publicar', name: 'publicar', component: () => import('../views/Empresa/publicar.vue')
+		path: '/anuncio/publicar', name: 'publicar', component: () => import('../views/Empresa/publicar.vue')
+	},
+	{
+		path: '/empresas/login', name: 'loginEmpresa', component: () => import('../views/Empresa/login.vue')
 	},
 	{
 		path: '/preguntas-frecuentes', name: 'PreguntasPostulante', component: () => import('../views/Candidato/preguntas.vue')
@@ -24,6 +27,9 @@ const routes = [
 	},
 	{
 		path: '/candidato/crearCV', name: 'crearCV', component: () => import('../views/Candidato/crearCV.vue')
+	},
+	{
+		path: '/aviso/:id', name: 'verAviso', component: () => import('../views/Empresa/aviso.vue')
 	},
 ]
 

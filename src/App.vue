@@ -72,7 +72,7 @@
 				<div class="encabezado py-2 px-3"> Empresas </div>
 				<div>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Registre su empresa</a></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Entrar al sistema</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginEmpresa'}">Ingrese como empresa</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Panel de control</a></p>
 					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Buscar currículos</a></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Pregutnas frecuentes</a></p>

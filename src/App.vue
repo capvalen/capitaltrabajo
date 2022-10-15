@@ -79,7 +79,9 @@
 				</div>
 			</div>
 			<div class="col-md-8 col-lg-9 col-xl-10 p-3">
-				<router-view></router-view>
+				
+				<router-view :variable1='variable1' :refTodos="refTodos"></router-view>
+
 				<footer>
 				<div class="row mt-5 p-4">
 					<div class="col">
@@ -126,14 +128,47 @@
 </template>
 
 <script>
+import db from "./firebaseInit";
+import {collection, getDocs, query, where, orderBy, startAt, endAt } from 'firebase/firestore';
+
 export default{
 	data(){
 		return {
 			departamentoId:-1,
 			departamentos:['Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'El Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ],
+			variable1:'cont-variable', refTodos:null
 		}
 	},
+	mounted(){
+		this.cargarFirebase();
+	},
 	methods:{
+		async cargarFirebase(){
+			this.refTodos = collection(db, "departamentos");
+			//todos forma google
+			/* const querySnapshot = await getDocs( this.refTodos );
+			querySnapshot.forEach((doc) => {
+				 console.log(doc.id, " => ", doc.data());
+				//console.log(doc.data().text);
+			}); */
+
+			//todos forma separada
+			/* const citiesCol = collection(db, 'todos')
+			const cityCaptura = await getDocs(citiesCol);
+			const cityList = cityCaptura.docs.map(doc => doc.data());
+			console.log(cityList); */
+
+			//todos con where
+			/* const q = query(collection(db, "todos"), where("text", ">=", 'mundo'));
+			//const q = query(refTodos, orderBy('text'), startAt('mundo') );
+
+			const querySnapshot = await getDocs(q);
+			querySnapshot.forEach((doc) => {
+				// doc.data() is never undefined for query doc snapshots
+				console.log(doc.id, " => ", doc.data());
+			}); */
+
+		},
 		cambiarDepartamento(index){
 			this.departamentoId=index;
 			if(index==-1){

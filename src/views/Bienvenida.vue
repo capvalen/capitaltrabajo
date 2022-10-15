@@ -6,12 +6,16 @@
 			<div class="col">
 				<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
 				<p class="p-3">Capital de Trabajo es la puerta de acceso al mercado de trabajo en internet. ¡Encuentre trabajo ya! Podrá consultar nuestro directorio de empresas, y buscar empleo en nuestra bolsa de trabajo on-line.</p>
-				<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Ver empleos</button></div>
+				<div class="d-flex justify-content-center mx-auto">
+					<button class="btn btn-primary" @click="$router.push('buscador')">Ver empleos</button>
+				</div>
 			</div>
 			<div class="col">
 				<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
 				<p class="p-3">Agregue su currículum gratis a nuestra base de datos y dese a conocer a cientos de empresas de todo el país. Además le regalaremos una página web gratis para poder tener acceso a su currículum desde internet.</p>
-				<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Subir CV</button></div>
+				<div class="d-flex justify-content-center mx-auto">
+					<button class="btn btn-primary" @click="$router.push({name: 'crearCV'})">Subir CV</button>
+				</div>
 
 			</div>
 		</div>
@@ -24,9 +28,35 @@
 			<div class="col">
 				<div class="encabezado py-2 px-3"> Publicar aviso </div>
 				<p class="p-3">En Capital de Trabajo su empresa podrá publicar todas sus ofertas de empleo gratis, crear una página web con los datos de su empresa , y buscar entre miles de currículos a los mejores profesionales del país.</p>
-				<div class="d-flex justify-content-center mx-auto"><button class="btn btn-primary">Publicar aviso</button></div>
+				<div class="d-flex justify-content-center mx-auto">
+					<button class="btn btn-primary" @click="$router.push({name: 'publicar'})">Publicar aviso</button>
+				</div>
 
 			</div>
 		</div>
 	</div>
 </template>
+
+<script>
+	import {collection, getDocs, query, where, orderBy, startAt, endAt } from 'firebase/firestore';
+var depas= [];
+	export default{
+		name: 'Bienvenida',
+		props:['variable1', 'refTodos'],
+		async mounted(){
+			console.log('estoy en bienvenido, con:', this.variable1);
+			
+			//todos forma simple
+			
+			const cityCaptura = await getDocs( query(this.refTodos) );
+			cityCaptura.docs.map(doc => {
+				//console.log( doc.id , '=>', doc.data())
+				depas.push( doc.data());
+				
+			});
+			console.log(depas[1].ciudades);
+			
+			
+		}
+	}
+</script>

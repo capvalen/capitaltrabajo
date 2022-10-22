@@ -39,23 +39,17 @@
 
 <script>
 	import {collection, getDocs, query, where, orderBy, startAt, endAt } from 'firebase/firestore';
-var depas= [];
+	
 	export default{
+		data(){
+			return {
+			}
+		},
 		name: 'Bienvenida',
-		props:['variable1', 'refTodos'],
+		props:['variable1', 'refTodos', 'departamentos'],
 		async mounted(){
 			console.log('estoy en bienvenido, con:', this.variable1);
-			
-			//todos forma simple
-			
-			const cityCaptura = await getDocs( query(this.refTodos) );
-			cityCaptura.docs.map(doc => {
-				//console.log( doc.id , '=>', doc.data())
-				depas.push( doc.data());
 				
-			});
-			console.log(depas[1].ciudades);
-			
 			
 		}
 	}

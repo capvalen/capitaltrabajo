@@ -38,7 +38,7 @@
 						<button class="btn btn-primary dropdown-toggle px-5" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnTodoPais"><i class="bi bi-geo-alt-fill"></i> Todo el país</button>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li @click="cambiarDepartamento(-1)"><a class="dropdown-item" href="#"><i class="bi bi-geo-alt-fill"></i> Todo el país</a></li>
-							<li v-for="(departamento, index) in departamentos" @click="cambiarDepartamento(index)"><a class="dropdown-item" href="#">{{departamento}}</a></li>
+							<li v-for="(departamento, index) in departamentos" @click="cambiarDepartamento(index)"><a class="dropdown-item" href="#">{{departamento.nombre}}</a></li>
 						</ul>
 						<button class="btn btn-primary px-4" id="btnBuscarTrabajo" type="button">Buscar trabajo</button>
 					</div>
@@ -59,9 +59,10 @@
 				<div class="encabezado py-2 px-3"> Candidatos </div>
 				<div>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginCandidato'}">Registrarse</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCV'}">Ingresar currículum</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Modificar currículum</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCV'}">Mi currículum</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Mis postulaciones</a></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar currículum</a></p>
+					
 				</div>
 				<div class="encabezado py-2 px-3"> Envío de ofertas </div>
 				<div>
@@ -80,7 +81,7 @@
 			</div>
 			<div class="col-md-8 col-lg-9 col-xl-10 p-3">
 				
-				<router-view :variable1='variable1' :refTodos="refTodos"></router-view>
+				<router-view :variable1='variable1' :refTodos="refTodos" :departamentos="departamentos" :refUsuario='refUsuario' :logueado='logueado'></router-view>
 
 				<footer>
 				<div class="row mt-5 p-4">
@@ -111,8 +112,8 @@
 							<div class="redondeo mx-2"><a href="#"><i class="bi bi-twitter"></i></a></div>
 							<div class="redondeo mx-2"><a href="#"><i class="bi bi-instagram"></i></a></div>
 						</div>
-						<div class="w-50 mt-3">
-							<center><img src="../public/images/google-play.svg" alt=""></center>
+						<div class="w-50 mt-3 text-center">
+							<img src="../public/images/google-play.svg" alt="">
 						</div>
 					</div>
 						
@@ -128,23 +129,69 @@
 </template>
 
 <script>
-import db from "./firebaseInit";
+import firebase from "./firebaseInit";
 import {collection, getDocs, query, where, orderBy, startAt, endAt } from 'firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 export default{
 	data(){
 		return {
 			departamentoId:-1,
-			departamentos:['Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'El Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ],
-			variable1:'cont-variable', refTodos:null
+			departamentos:[],
+			variable1:'cont-variable', refTodos:null, refUsuario:null, logueado:false, nuevo:{
+				nombres:'', apellidos:''
+			}
 		}
 	},
 	mounted(){
-		this.cargarFirebase();
+		this.comprobarLogin();
+		this.cargarFirebase(); 
 	},
 	methods:{
+		comprobarLogin(){
+				const auth = getAuth();
+				onAuthStateChanged(auth, async (user) => {
+					if (user) {
+						const uid = user.uid;
+						//console.log('que Usuario Es ' + uid)
+						sessionStorage.setItem('uid', uid);
+						sessionStorage.setItem('level', 1);//1 para candidato
+						this.logueado=true;
+						
+						const q = query( this.refUsuario , where('id', '==', uid));
+						const qSnapshot = await getDocs(q);
+						qSnapshot.forEach(doc =>{
+							const usuario = doc.data();
+							sessionStorage.setItem('nombres', usuario.nombres )
+							sessionStorage.setItem('apellidos', usuario.apellidos )
+							this.nuevo.nombres = usuario.nombres
+							this.nuevo.apellidos = usuario.apellidos
+						})
+						
+					} else {
+						this.logueado=false;
+						this.nuevo.nombres='';
+						this.nuevo.apellidos='';
+						sessionStorage.removeItem('uid');
+						sessionStorage.removeItem('level');
+						sessionStorage.removeItem('nombres');
+						sessionStorage.removeItem('apellidos');
+					}
+				});
+			},
 		async cargarFirebase(){
-			this.refTodos = collection(db, "departamentos");
+			this.refTodos = collection(firebase.db, "todos");
+			this.refUsuario = collection(firebase.db, "usuarios");
+			
+			const departamentos = await getDocs( query( collection(firebase.db, "departamentos"), orderBy('nombre', 'asc') ) );
+			departamentos.docs.map(doc => {
+				const departamento = doc.data();
+				departamento.id = doc.id
+				this.departamentos.push( departamento )
+			});
+			//console.log(this.departamentos);
+
 			//todos forma google
 			/* const querySnapshot = await getDocs( this.refTodos );
 			querySnapshot.forEach((doc) => {
@@ -174,7 +221,7 @@ export default{
 			if(index==-1){
 				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-geo-alt-fill"></i> Todo el país';
 			}else{
-				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-house"></i> '+this.departamentos[index];
+				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-house"></i> '+this.departamentos[index].nombre;
 			}
 		}
 	}

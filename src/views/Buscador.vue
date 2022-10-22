@@ -9,6 +9,8 @@
 					<div class="col-8">
 						<select class="form-select" name="" id="">
 							<option value="1">Cualquiera</option>
+							<option v-for="departamento in departamentos" :value="departamento.id">{{departamento.nombre}}</option>
+
 						</select>
 					</div>
 				</div>
@@ -90,21 +92,25 @@
 </template>
 
 <script>
+	import {collection, getDocs, query, where, orderBy, startAt, endAt } from 'firebase/firestore';
+
 export default{
 	name: 'Buscador',
+	props:['departamentos'],
 	data(){
 		return {
 			categorias:[
 				{cantidad:14, nombre: 'Administración'},{cantidad:12, nombre: 'Arte y diseño'},{cantidad:36, nombre: 'Informática'},{cantidad:85, nombre: 'Docencia'},{cantidad:46, nombre: 'Ingeniería'},{cantidad:91, nombre: 'Call center'},{cantidad:60, nombre: 'Servicio al cliente'},{cantidad:34, nombre: 'Asesor/a'},
 			],
-			departamentos:[
-				{cantidad:60, nombre: 'Lima'},{cantidad:18, nombre: 'Amazonas'},{cantidad:14, nombre: 'Ancash'},{cantidad:51, nombre: 'Apurimac'},{cantidad:60, nombre: 'Arequipa'},{cantidad:15, nombre: 'Ayacucho'},{cantidad:64, nombre: 'Cajamarca'},{cantidad:23, nombre: 'Cusco'},{cantidad:28, nombre: 'El Callao'},{cantidad:43, nombre: 'Huancavelica'},{cantidad:80, nombre: 'Huánuco'},{cantidad:46, nombre: 'Ica'},{cantidad:15, nombre: 'Junín'},{cantidad:12, nombre: 'La Libertad'},{cantidad:8, nombre: 'Lambayeque'},
-				{cantidad:43, nombre: 'Loreto'},{cantidad:74, nombre: 'Madre de Dios'},{cantidad:43, nombre: 'Moquegua'},{cantidad:38, nombre: 'Pasco'},{cantidad:28, nombre: 'Piura'},{cantidad:46, nombre: 'Puno'},
-				{cantidad:41, nombre: 'San Martín'},{cantidad:28, nombre: 'Tacna'},{cantidad:26, nombre: 'Tumbes'},{cantidad:11, nombre: 'Ucayali'}
-				]
 		}
 	},
+	mounted(){
+		this.cargarDatos();
+	},
 	methods:{
+		async cargarDatos(){
+			
+		},
 		verAviso(id){
 			this.$router.push({name: 'verAviso', params:{ id }})
 		}

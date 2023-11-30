@@ -53,35 +53,35 @@
 				<div class="encabezado py-2 px-3"> Bolsa de trabajo </div>
 				<div>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" to="/buscador">Buscar empleo</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'listaEmpresas'}">Lista de empresas</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'listaEmpresas'}">Lista de empleadores y empresas</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><router-link class="text-decoration-none" :to="{name: 'PreguntasPostulante'}">Preguntas frecuentes</router-link></p>
 				</div>
 				<div class="encabezado py-2 px-3"> Candidatos </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginCandidato'}">Registrarse</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginCandidato'}">Ingresar / Registrarse</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'crearCV'}">Mi currículum</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Mis postulaciones</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'verDondePostule'}">Mis postulaciones</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar currículum</a></p>
 					
 				</div>
 				<div class="encabezado py-2 px-3"> Envío de ofertas </div>
 				<div>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'publicar'}">Oferta nueva</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Modificar oferta</a></p>
-					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar oferta</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'misOfertas'}">Ver ofertas</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Eliminar ofertas</a></p>
 				</div>
-				<div class="encabezado py-2 px-3"> Empresas </div>
+				<div class="encabezado py-2 px-3"> Empleadores y empresas </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Registre su empresa</a></p>
+					<p class="py-1 ps-4 m-0 subItem d-none"><a class="text-decoration-none" href="#">Registrese como empresa</a></p>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'loginEmpresa'}">Ingrese como empresa</router-link></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Panel de control</a></p>
-					<p class="py-1 ps-4 m-0 subItem"><a class="text-decoration-none" href="#">Buscar currículos</a></p>
-					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Pregutnas frecuentes</a></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'verPanel'}">Panel de control</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'buscarCV'}">Buscar currículos</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem pb-4"><router-link class="text-decoration-none" :to="{name: 'PreguntasPostulante'}">Preguntas frecuentes</router-link></p>
 				</div>
 			</div>
 			<div class="col-md-8 col-lg-9 col-xl-10 p-3">
 				
-				<router-view :variable1='variable1' :refTodos="refTodos" :departamentos="departamentos" :refUsuario='refUsuario' :logueado='logueado'></router-view>
+				<router-view :variable1='variable1' :refTodos="refTodos" :departamentos="departamentos" :refUsuario='refUsuario' :usuario="nuevo" :logueado='logueado'></router-view>
 
 				<footer>
 				<div class="row mt-5 p-4">
@@ -119,7 +119,7 @@
 						
 				</div>
 				<hr>
-				<p class="text-center">Copyright 2022</p>
+				<p class="text-center">Copyright 2023</p>
 			</footer>
 			</div>
 		</div>
@@ -138,18 +138,19 @@ export default{
 	data(){
 		return {
 			departamentoId:-1,
-			departamentos:[],
+			departamentos:['Extranjero', 'Cualquier departamento', 'Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'El Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ],
 			variable1:'cont-variable', refTodos:null, refUsuario:null, logueado:false, nuevo:{
-				nombres:'', apellidos:''
-			}
+				nombres:'', apellidos:'', uid:'', level:1
+			},
 		}
 	},
 	mounted(){
-		this.comprobarLogin();
-		this.cargarFirebase(); 
+		if(sessionStorage.getItem('uid')) this.extraerDatosLocal()
+		else this.comprobarLoginFireBase();
+		//this.cargarFirebase();
 	},
 	methods:{
-		comprobarLogin(){
+		comprobarLoginFireBase(){
 				const auth = getAuth();
 				onAuthStateChanged(auth, async (user) => {
 					if (user) {
@@ -163,16 +164,21 @@ export default{
 						const qSnapshot = await getDocs(q);
 						qSnapshot.forEach(doc =>{
 							const usuario = doc.data();
+							sessionStorage.setItem('uid', user.uid )
 							sessionStorage.setItem('nombres', usuario.nombres )
 							sessionStorage.setItem('apellidos', usuario.apellidos )
+							this.nuevo.uid = user.uid;
 							this.nuevo.nombres = usuario.nombres
-							this.nuevo.apellidos = usuario.apellidos
+							this.nuevo.apellidos = usuario.apellido
+							this.nuevo.level = 1 //1 para candidato
 						})
 						
 					} else {
 						this.logueado=false;
+						this.nuevo.uid='';
 						this.nuevo.nombres='';
 						this.nuevo.apellidos='';
+						this.nuevo.level=1;
 						sessionStorage.removeItem('uid');
 						sessionStorage.removeItem('level');
 						sessionStorage.removeItem('nombres');
@@ -180,6 +186,13 @@ export default{
 					}
 				});
 			},
+		extraerDatosLocal(){
+			this.nuevo.uid = sessionStorage.getItem('uid')
+			this.nuevo.nombres = sessionStorage.getItem('nombres')
+			this.nuevo.apellidos = sessionStorage.getItem('apellidos')
+			this.nuevo.level = sessionStorage.getItem('level')
+			this.logueado = true;
+		},
 		async cargarFirebase(){
 			this.refTodos = collection(firebase.db, "todos");
 			this.refUsuario = collection(firebase.db, "usuarios");

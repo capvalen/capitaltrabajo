@@ -3,31 +3,55 @@
 	<h4 class="text-muted">Datos personales</h4>
 	<div class="container">
 		<div class="row my-2">
-			<div class="col-2">Nombres</div>
+			<div class="col-2">Nombres <span class="text-danger">*</span></div>
 			<div class="col">
 				<input type="text" v-model="postulante.nombres">
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">Apellidos</div>
+			<div class="col-2">Apellidos <span class="text-danger">*</span></div>
 			<div class="col">
 				<input type="text" v-model="postulante.apellidos">
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">D.N.I.</div>
+			<div class="col-2">Nacionalidad</div>
+			<div class="col">
+				<select name="" v-model="postulante.nacionalidad">
+					<option value="1">Peruana</option>
+					<option value="2">Venezolana</option>
+					<option value="3">Colombiana</option>
+					<option value="4">Chilena</option>
+					<option value="5">Otro</option>
+				</select>
+			</div>
+		</div>
+		<div class="row my-2" v-if="postulante.nacionalidad==1">
+			<div class="col-2">D.N.I. <span class="text-danger">*</span></div>
+			<div class="col">
+				<input type="text" v-model="postulante.dni">
+			</div>
+		</div>
+		<div class="row my-2" v-else>
+			<div class="col-2">Cédula de extranjería <span class="text-danger">*</span></div>
 			<div class="col">
 				<input type="text" v-model="postulante.dni">
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">Celular</div>
+			<div class="col-2">Celular <span class="text-danger">*</span></div>
 			<div class="col">
 				<input type="text" v-model="postulante.celular">
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">¿Qué edad tiene?</div>
+			<div class="col-2">Whatsapp <span class="text-danger">*</span></div>
+			<div class="col">
+				<input type="text" v-model="postulante.whatsapp">
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-2">¿Qué edad tiene? <span class="text-danger">*</span></div>
 			<div class="col">
 				<input type="number" v-model="postulante.edad">
 			</div>
@@ -41,7 +65,7 @@
 		<div class="row my-2">
 			<div class="col-2">Página web personal</div>
 			<div class="col">
-				<input type="text" v-model="postulante.pagina">
+				<input type="text" v-model="postulante.web">
 			</div>
 		</div>
 		<div class="row my-2">
@@ -65,21 +89,31 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">13. Su nacionalidad</div>
+			<div class="col-10">Describa brevemente sus habilidades principales, destrezas y/o fortalezas.</div>
+			<div class="col-10">
+				<textarea cols="3" rows="3" style="width:50%;" v-model="postulante.destrezas"></textarea>
+			</div>
+		</div>
+		<div class="row my-2">
+			<div class="col-4">¿Está Ud. autorizado para trabajar en Perú?</div>
 			<div class="col">
-				<select id="" v-model="postulante.nacionalidad">
-					<option value="1">Peruano</option>
-					<option value="2">Extranjero</option>
+				<select id="" v-model="postulante.autorizado">
+					<option value="1">Sí</option>
+					<option value="2">Sí, sólo unos meses</option>
+					<option value="3">No</option>
 				</select>
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-10">Describa brevemente sus habilidades principales, destrezas y/o fortalezas.</div>
-			<div class="col-10">
-				<textarea cols="3" rows="3" style="width:50%;" v-model="postulante.habilidades"></textarea>
+			<div class="col-3">¿Disponibilidad de viaje?</div>
+			<div class="col">
+				<select id="" v-model="postulante.viaje">
+					<option value="1">Sí</option>
+					<option value="2">Sí, sólo unos meses</option>
+					<option value="3">No</option>
+				</select>
 			</div>
 		</div>
-		
 
 	</div>
 
@@ -88,23 +122,21 @@
 		<div class="row my-2">
 			<div class="col-10">Título de su CV, por ejemplo: <span class="fst-italic">"Programador", "Secretaria Bilíngüe", "Ingeniero Petroquímico"</span></div>
 			<div class="col-10">
-				<input type="text" style="width:50%;" v-model="postulante.presentacion">
+				<input type="text" style="width:50%;" v-model="postulante.titulo">
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">1. Lugar de residencia</div>
+			<div class="col-2">1. Lugar de residencia <span class="text-danger">*</span></div>
 			<div class="col">
 				<select id="" v-model="postulante.residencia">
-					<option value="1">Por favor seleccione</option>
-					<option value="1">Lima</option>
-					<option value="2">Junín</option>
-					<option value="3">Anchas</option>
+					<option value="-1">Por favor seleccione</option>
+					<option v-for="(residencia, index) in residencias" :value="index">{{residencia}}</option>
 				</select>
 			</div>
 		</div>
 		
 		<div class="row my-2">
-			<div class="col-2">3. ¿Puede conducir?</div>
+			<div class="col-2">2. ¿Puede conducir?</div>
 			<div class="col">
 				<select id="" v-model="postulante.conducir">
 					<option value="1">No</option>
@@ -113,7 +145,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">4. ¿Posee vehículo propio?</div>
+			<div class="col-2">3. ¿Posee vehículo propio?</div>
 			<div class="col">
 				<select id="" v-model="postulante.vehiculo">
 					<option value="1">No</option>
@@ -122,29 +154,21 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">5. ¿Nivel de estudios?</div>
+			<div class="col-2">4. ¿Nivel de estudios? <span class="text-danger">*</span></div>
 			<div class="col">
 				<select id="" v-model="postulante.estudios">
 					<option value="1">Ninguno</option>
 					<option value="2">Primaria incompleta</option>
-					<option value="2">Primaria completa</option>
-					<option value="2">Secundaria incompleta</option>
-					<option value="2">Secundaria completa</option>
-					<option value="2">Superior</option>
+					<option value="3">Primaria completa</option>
+					<option value="4">Secundaria incompleta</option>
+					<option value="5">Secundaria completa</option>
+					<option value="6">Superior</option>
+					<option value="7">Técico</option>
 				</select>
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">6. ¿Que grado tiene?</div>
-			<div class="col">
-				<select id="" v-model="postulante.grado">
-					<option value="1">No</option>
-					<option value="2">Si</option>
-				</select>
-			</div>
-		</div>
-		<div class="row my-2">
-			<div class="col-2">7. Situación laboral</div>
+			<div class="col-2">5. Situación laboral</div>
 			<div class="col">
 				<select id="" v-model="postulante.situacion">
 					<option value="1">Sin trabajo</option>
@@ -153,7 +177,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">8. Disponibilidad</div>
+			<div class="col-2">6. Disponibilidad</div>
 			<div class="col">
 				<select id="" v-model="postulante.disponibilidad">
 					<option value="1">Inmediata</option>
@@ -163,7 +187,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">9. Nivel de inglés</div>
+			<div class="col-2">7. Nivel de inglés</div>
 			<div class="col">
 				<select id="" v-model="postulante.ingles">
 					<option value="1">No aprendido</option>
@@ -173,18 +197,9 @@
 				</select>
 			</div>
 		</div>
-		<div class="row my-2">
-			<div class="col-2">10. ¿Está Ud. autorizado para trabajar en Perú?</div>
-			<div class="col">
-				<select id="" v-model="postulante.trabajar_peru">
-					<option value="1">Si</option>
-					<option value="2">No</option>
-				</select>
-			</div>
-		</div>
 		
 		<div class="row my-2">
-			<div class="col-2">14. Expectativas salariales</div>
+			<div class="col-2">8. Expectativas salariales</div>
 			<div class="col">
 				<select id="" v-model="postulante.expectativas">
 					<option value="1">Entre 950 a 1200</option>
@@ -195,7 +210,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col">15. ¿Qué tipo de empleo busca? Puede seleccionar todos si desea</div>
+			<div class="col">9. ¿Qué tipo de empleo busca? Puede seleccionar todos si desea</div>
 			<div class=" container">
 				<div class="row row-cols-3 my-2">
 					<div class="col">
@@ -250,7 +265,7 @@
 				</div>
 			</div>
 
-			<div class="col">16. ¿Qué categorías clasificaría su perfil profesional? Por favor no elija más de 2</div>
+			<div class="col">10. ¿Qué categorías clasificaría su perfil profesional? Por favor no elija más de 2</div>
 			<div class="container">
 				<div class="row row-cols-2 my-2">
 					<div class="col">
@@ -369,10 +384,10 @@
 				</div>
 			</div>
 
-			<div class="col">17. ¿En qué lugares desearía trabajar?</div>
+			<div class="col">11. ¿En qué lugares desearía trabajar?</div>
 			<div class="container"></div>
 			<div class="row row-cols-3 my-2">
-				<div class="col" v-for="departamento in departamentos">
+				<div class="col" v-for="departamento in departamentosVivienda">
 						<div class="form-check">
 							<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
 							<label class="form-check-label" for="flexCheckDefault">
@@ -381,17 +396,42 @@
 						</div>
 					</div>
 			</div>
-
 			<div class="row my-2">
-				<div class="col">18. Puede adjuntar un documento extra</div>
+				<div class="col-2">12. ¿Es discapacitado?</div>
 				<div class="col">
-					<input type="file">
+					<select id="" v-model="postulante.discapacidad">
+						<option value="1">Si</option>
+						<option value="2">No</option>
+					</select>
 				</div>
 			</div>
 
 			<div class="row my-2">
-				<div class="col d-flex justify-content-center"><button class="btn btn-outline-primary"><i class="bi bi-cloud-plus"></i> Enviar currículum</button></div>
+				<div class="col-3">13. Puede adjuntar un documento extra</div>
+				<div class="col" >
+					<input v-if="postulante.documento==''" type="file" ref="documento" id="documento" @change="subirDocumento()" accept="application/pdf,application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.oasis.opendocument.text">
+					<p v-else><a :href="'/documentos/'+postulante.documento" target="_blank">Documento adjunto</a></p>
+				</div>
+				
 			</div>
+			<div class="row my-2">
+				<div class="col-3">14. Agregue una foto a su CV</div>
+				<div class="col">
+					<input v-if="postulante.foto==''" type="file" ref="foto" id="foto" accept="image/*" @change="subirFoto()">
+					<p v-else><a :href="'/images/fotos/'+postulante.foto" target="_blank">Foto adjuntada</a></p>
+				</div>
+			</div>
+
+			<div class="row my-2">
+				<div class="col d-flex justify-content-center" v-if="postulante.id<0">
+					<button class="btn btn-outline-primary" @click="guardarCV()" ><i class="bi bi-cloud-plus"></i> Enviar currículum</button>
+				</div>
+				<div class="col d-flex justify-content-center gap-2" v-else>
+					<button class="btn btn-outline-success" @click="actualizarCV()"><i class="bi bi-cloud-plus"></i> Actualizar currículum</button>
+					<button class="btn btn-outline-primary" @click="verCV()"><i class="bi bi-cloud-plus"></i> Ver mi currículum</button>
+				</div>
+			</div>
+			
 
 
 		</div>
@@ -403,15 +443,121 @@
 </template>
 
 <script>
+import BuscarCV from '../Empresa/buscarCV.vue'
+
 export default{
 	name: 'crearCuenta',
+	props:['usuario', 'departamentos'],
 	data(){
 		return {
-			departamentos:['Extranjero','Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ],
-			postulante:{
-				nombres:'', apellidos: '', dni:'', celular:'', edad:'', correo:'', web:'', sexo:'', civil:'', nacionalidad:'', habilidades:'', residencia:'',conducir:'',vehiculo:'',estudios:'',grado:'',situacion:'',disponibilidad:'',ingles:'',trabajar_peru:'',expectativas:'',presentacion:'',
+			residencias:[], departamentosVivienda:[],
+			postulante:{ id:-1, idPostulante:-1, 
+				nombres:'', apellidos: '', dni:'', celular:'', edad:'', correo:'', web:'', sexo:1, civil:1, nacionalidad:1, destrezas:'', residencia:-1,conducir:1,vehiculo:1,estudios:1, situacion:1,disponibilidad:1,ingles:1, expectativas:1,titulo:'', nacionalidad:1, whatsapp:'', autorizado:1, viaje:1, documento:'', foto:'', discapacidad:2
 			}
 		}
-	}
+	},
+	mounted() {
+		this.departamentosVivienda=[]
+		this.departamentosVivienda = this.departamentos
+		this.residencias = this.departamentos
+		this.buscarCV()
+		//this.departamentosVivienda.unshift('Extranjero', 'Cualquier departamento')
+	},
+	methods: {
+		buscarCV(){
+			let uid = this.usuario.uid
+			this.axios.post(this.servidor+'Postulante.php', {pedir:'pedirCV', uid})
+			.then(resp => this.postulante = resp.data )
+		},
+		guardarCV(){
+			this.postulante.idPostulante = this.usuario.uid
+			if( this.validarRellenado())
+				this.axios.post(this.servidor+'Postulante.php', {pedir:'registrar', postulante: this.postulante })
+				.then(resp=>{
+					this.postulante.id = resp.data.id
+					alertify.success('CV registrado con éxito')
+					console.log(resp.data)
+				})
+		},
+		actualizarCV(){
+			if( this.validarRellenado())
+				this.axios.post(this.servidor+'Postulante.php', {pedir:'actualizar', postulante: this.postulante })
+				.then(resp=>{
+					alertify.success('Datos actualizados con éxito')
+					console.log(resp.data)
+				})
+		},
+		verCV(){
+			this.$router.push({ name: 'verCVPostulante', params: { uid: this.postulante.idPostulante } });
+		},
+		subirFoto(){
+			let archivo = this.$refs.foto.files[0];
+
+			if(archivo){
+				let formData = new FormData();
+				formData.append('ruta', 'images/fotos');
+				formData.append('archivo', archivo);
+
+				this.axios.post(this.servidor+'subirAdjunto.php', formData,{
+					headers: { 'Content-Type' : 'multipart/form-data' }
+				})
+				.then( response => {
+					let nomArchivo = response.data;
+					console.log(nomArchivo)
+					if( nomArchivo =='Error subida' ){
+						this.postulante.foto='';
+						console.log( 'err1' );
+					}else{ //subió bien
+						this.postulante.foto = nomArchivo;
+						console.log( 'subio bien al indice con nombre: '+ nomArchivo );
+					}
+				})
+				.catch(function(ero){ console.log( 'err2' + ero );
+					return 'error 2';
+				});
+			}
+		},
+		subirDocumento(){
+			let archivo = this.$refs.documento.files[0];
+
+			if(archivo){
+				let formData = new FormData();
+				formData.append('ruta', 'documentos');
+				formData.append('archivo', archivo);
+
+				this.axios.post(this.servidor+'subirAdjunto.php', formData,{
+					headers: { 'Content-Type' : 'multipart/form-data' }
+				})
+				.then( response => {
+					let nomArchivo = response.data;
+					console.log(nomArchivo)
+					if( nomArchivo =='Error subida' ){
+						this.postulante.documento='';
+						console.log( 'err1' );
+					}else{ //subió bien
+						this.postulante.documento = nomArchivo;
+						console.log( 'subio bien al indice con nombre: '+ nomArchivo );
+					}
+				})
+				.catch(function(ero){
+					console.log( 'err2' + ero );
+					return 'error 2';
+				});
+			}
+		},
+		validarRellenado(){
+			let valor = false;
+			if( this.postulante.nombres == '') alertify.error('Falta rellenar el campo nombres')
+			else if( this.postulante.apellidos == '') alertify.error('Falta rellenar el campo apellidos')
+			else if( this.postulante.dni == '') alertify.error('Falta rellenar el campo DNI / Celula')
+			else if( this.postulante.celular == '') alertify.error('Falta rellenar el campo celular')
+			else if( this.postulante.whatsapp == '') alertify.error('Falta rellenar el campo Whastapp')
+			else if( this.postulante.estudios == '') alertify.error('Falta rellenar el campo de estudios')
+			else if( this.postulante.edad == '' || this.postulante.edad<=0) alertify.error('Falta rellenar el campo de edad')
+			else if( this.postulante.residencia == '' || this.postulante.residencia<0) alertify.error('Falta rellenar el campo de residencia')
+			else valor = true
+			return valor;
+		}
+	},
 }
 </script>

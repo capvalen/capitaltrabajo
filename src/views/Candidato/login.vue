@@ -47,7 +47,7 @@
 		<div class="col-4 p-5" v-else>
 			<h2>Gracias por utilizar la plataforma</h2>
 			<p>Actualmente ya estas logueado con este usuario: <span></span> </p>
-			<p>Nombres: <span>{{nuevo.nombres}} {{nuevo.apellidos}}</span></p>
+			<!-- <p>Nombres: <span>{{nuevo.nombres}} {{nuevo.apellidos}}</span></p> -->
 			<p>Correo: <span>{{nuevo.correo}}</span></p>
 			<p>Puedes hacer uso de tu plataforma desde acá</p>
 			<button class="btn btn-outline-primary"><i class="bi bi-columns-gap"></i> Ir a mi panel</button>
@@ -76,10 +76,9 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWith
 			//this.salir()
 			this.comprobarLogin();
 		},
-		props:['refUsuario', 'logueado'],
+		props:['refUsuario', 'logueado', 'servidor'],
 		methods:{
 			comprobarLogin(){
-				
 				const auth = getAuth();
 				onAuthStateChanged(auth, async (user) => {
 					if (user) {
@@ -122,7 +121,6 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWith
 						const user = userCredential.user;
 					})
 					.catch((error) => {
-						
 						const errorCode = error.code;
 						const errorMessage = error.message;
 						console.log(errorMessage);
@@ -207,16 +205,19 @@ import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWith
 				const auth = getAuth();
 				signOut(auth).then(() => {
 					this.limpiarCampos()
-					sessionStorage.removeItem('uid');
-					sessionStorage.removeItem('level');
-					sessionStorage.removeItem('nombres');
-					sessionStorage.removeItem('apellidos');
-					sessionStorage.removeItem('correo');
+					
 					//console.log('salio');
 				}).catch((error) => {
 					// An error happened.
 				});
-			}
+				sessionStorage.removeItem('uid');
+				sessionStorage.removeItem('level');
+				sessionStorage.removeItem('nombres');
+				sessionStorage.removeItem('apellidos');
+				sessionStorage.removeItem('correo');
+				this.nuevo.uid=null
+				this.nuevo.level=null
+			},
 		}
 	}
 </script>

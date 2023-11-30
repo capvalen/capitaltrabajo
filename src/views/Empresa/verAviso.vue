@@ -1,5 +1,5 @@
 <template>
-	<div v-if="aviso.id">
+	<div v-if="aviso.id && (aviso.publico==1 || aviso.activo==0)">
 		<h3 class="">{{capitalizar(aviso.cargo)}}, {{ aviso.complemento }}</h3>
 		<div class="row row-cols-2">
 			<div class="col">
@@ -100,17 +100,23 @@
 						<p><strong>Dirección:</strong> {{empresa.direccion}}</p>
 						<p v-if="empresa.sede"><strong>Sede:</strong> {{empresa.sede}}</p>
 						<p>{{empresa.descripcion}}</p>
-						<p v-if="empresa.correo"><strong>Correo:</strong> {{empresa.correo}}</p>
-						<p v-if="empresa.celular1 && aviso.whatsapp==1"><strong>Celular:</strong> {{empresa.celular1}}</p>
-						<p v-if="empresa.celular2 && aviso.whatsapp==1"><strong>Celular #2:</strong> {{empresa.celular2}}</p>
-						<p v-if="empresa.whatsapp && aviso.whatsapp==1"><strong>Whatsapp:</strong> {{empresa.whatsapp}}</p>
-						<p v-if="empresa.whatsapp2 && aviso.whatsapp==1"><strong>Whatsapp #2:</strong> {{empresa.whatsapp2}}</p>
-						<p v-if="empresa.contacto"><strong>Contacto:</strong> {{empresa.contacto}}</p>
-						<p v-if="empresa.puesto"><strong>Cargo:</strong> {{empresa.puesto}}</p>
+						
+						<div v-if="aviso.activo==1">
+							<p v-if="empresa.correo"><strong>Correo:</strong> {{empresa.correo}}</p>
+							<p v-if="empresa.celular1 && aviso.whatsapp==1"><strong>Celular:</strong> {{empresa.celular1}}</p>
+							<p v-if="empresa.celular2 && aviso.whatsapp==1"><strong>Celular #2:</strong> {{empresa.celular2}}</p>
+							<p v-if="empresa.whatsapp && aviso.whatsapp==1"><strong>Whatsapp:</strong> {{empresa.whatsapp}}</p>
+							<p v-if="empresa.whatsapp2 && aviso.whatsapp==1"><strong>Whatsapp #2:</strong> {{empresa.whatsapp2}}</p>
+							<p v-if="empresa.contacto"><strong>Contacto:</strong> {{empresa.contacto}}</p>
+							<p v-if="empresa.puesto"><strong>Cargo:</strong> {{empresa.puesto}}</p>
 
-						<a v-if="aviso.whatsapp==1" :href="'https://wa.me/51'+empresa.whatsapp" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Contactar vía Whatsapp</a>
-						<a v-if="aviso.whatsapp==1" :href="'tel:'+empresa.celular1" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Realizar una llamada</a>
-						<button class="btn btn-lg btn-outline-primary ms-2 my-1"><i class="bi bi-diamond-half"></i> Postular al puesto</button>
+							<a v-if="aviso.whatsapp==1" :href="'https://wa.me/51'+empresa.whatsapp" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Contactar vía Whatsapp</a>
+							<a v-if="aviso.whatsapp==1" :href="'tel:'+empresa.celular1" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Realizar una llamada</a>
+							<button class="btn btn-lg btn-outline-primary ms-2 my-1"><i class="bi bi-diamond-half"></i> Postular al puesto</button>
+						</div>
+						<div v-else>
+							<p><i class="bi bi-stop-circle"></i> Ya no se aceptan postulantes</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -118,6 +124,10 @@
 		
 
 
+	</div>
+	<div class="container" v-else-if="aviso.publico==0">
+		<h3>El aviso que intentas acceder aún no es público</h3>
+		<p>Se paciente que la empresa pronto lo publicará</p>
 	</div>
 	<div class="container" v-else>
 		<h3>Buscando operaciones</h3>

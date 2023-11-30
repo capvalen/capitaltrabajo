@@ -22,6 +22,23 @@
 				</div>
 			</div>
 			<div class="row my-2">
+				<div class="col-3">Publicar inmeditamente</div>
+				<div class="col">
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="rPublico" id="rPublico" value="1" v-model="publicacion.publico">
+							<label class="form-check-label" for="rPublico">
+								Sí
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input class="form-check-input" type="radio" name="rPublico" id="rPublico2" value="0" v-model="publicacion.publico">
+							<label class="form-check-label" for="rPublico2">
+								No
+							</label>
+						</div>
+				</div>
+			</div>
+			<div class="row my-2">
 				<div class="col-3">Mostrar e-mail de contacto</div>
 				<div class="col">
 						<div class="form-check form-check-inline">
@@ -405,8 +422,6 @@
 			</div>
 		</div>
 
-
-
 	</div>
 </template>
 
@@ -419,8 +434,8 @@
 				licencias:[ 'Sin permiso', 'A1', 'A2', 'A3', 'A4', 'A5', 'B', 'C', 'D', 'E', 'F' ],
 				question:'',  areas:[], departamentos:[], provincias:[],
 				publicacion:{id:null,idEmpresa:1, urgente:0, correo:1, celular:1, direccion:1, whatsapp:1, cargo:'', complemento:'', idDepartamento:-1, idProvincia:-1, jornada:-1, contrato:-1, sueldo:0, versueldo:true,
-				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPreguntas:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null
-				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null,
+				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPreguntas:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1
+				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null
 			}
 		},
 		mounted() {

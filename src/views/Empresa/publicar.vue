@@ -134,7 +134,7 @@
 			<div class="row my-2">
 				<div class="col-3">Área</div>
 				<div class="col ">
-					<select name="" id="">
+					<select name="" id="sltAreas" v-model="publicacion.area">
 						<option value="-1">Seleccione el área de trabajo</option>
 						<option v-for="area in areas" :value="area.id">{{area.area}}</option>
 					</select>
@@ -434,7 +434,7 @@
 				licencias:[ 'Sin permiso', 'A1', 'A2', 'A3', 'A4', 'A5', 'B', 'C', 'D', 'E', 'F' ],
 				question:'',  areas:[], departamentos:[], provincias:[],
 				publicacion:{id:null,idEmpresa:1, urgente:0, correo:1, celular:1, direccion:1, whatsapp:1, cargo:'', complemento:'', idDepartamento:-1, idProvincia:-1, jornada:-1, contrato:-1, sueldo:0, versueldo:true,
-				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPreguntas:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1
+				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPreguntas:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1, area:-1
 				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null
 			}
 		},
@@ -467,6 +467,7 @@
 					this.publicacion.jornada = resp.data.anuncio.jornada
 					this.publicacion.contrato = resp.data.anuncio.contrato
 					this.publicacion.sueldo = resp.data.anuncio.sueldo
+					this.publicacion.area = resp.data.anuncio.area
 					this.publicacion.idiomas = resp.data.idiomas
 					this.publicacion.licencias = resp.data.licencias
 					this.publicacion.versueldo= resp.data.anuncio.versueldo =='1'? true : false

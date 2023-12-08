@@ -34,13 +34,13 @@
 			<div class="row">
 				<div class="col position-relative">
 					<div class="input-group my-2 ">
-						<input type="text" class="form-control" id="txtBuscadorPrincipal" placeholder="Puesto, empresa o palabra clave">
+						<input type="text" class="form-control" id="txtBuscadorPrincipal" placeholder="Puesto, empresa o palabra clave" v-model="texto" @keyup.enter="buscarGlobal()">
 						<button class="btn btn-primary dropdown-toggle px-5" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="btnTodoPais"><i class="bi bi-geo-alt-fill"></i> Todo el país</button>
 						<ul class="dropdown-menu dropdown-menu-end">
 							<li @click="cambiarDepartamento(-1)"><a class="dropdown-item" href="#"><i class="bi bi-geo-alt-fill"></i> Todo el país</a></li>
-							<li v-for="(departamento, index) in departamentos" @click="cambiarDepartamento(index)"><a class="dropdown-item" href="#">{{departamento.nombre}}</a></li>
+							<li v-for="(departamento, index) in departamentosSolos" @click="cambiarDepartamento(index)"><a class="dropdown-item" href="#">{{capitalizar(departamento.departamento)}}</a></li>
 						</ul>
-						<button class="btn btn-primary px-4" id="btnBuscarTrabajo" type="button">Buscar trabajo</button>
+						<button class="btn btn-primary px-4" @click="buscarGlobal()" id="btnBuscarTrabajo" type="button">Buscar trabajo</button>
 					</div>
 					<span class="position-absolute top-0 start-0 ms-4 mt-3 text-secondary" id="spanLupa"><i class="bi bi-search"></i></span>
 				</div>
@@ -138,18 +138,26 @@ export default{
 	data(){
 		return {
 			departamentoId:-1,
-			departamentos:['Extranjero', 'Cualquier departamento', 'Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'El Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ],
-			variable1:'cont-variable', refTodos:null, refUsuario:null, logueado:false, nuevo:{
-				nombres:'', apellidos:'', uid:'', level:1
-			},
+			departamentos:['Extranjero', 'Cualquier departamento', 'Amazonas', 'Ancash', 'Apurimac', 'Arequipa', 'Ayacucho', 'Cajamarca', 'Cusco', 'El Callao', 'Huancavelica','Huánuco', 'Ica', 'Junín', 'La Libertad', 'Lambayeque', 'Lima', 'Loreto', 'Madre de Dios', 'Moquegua', 'Pasco', 'Piura', 'Puno','San Martín', 'Tacna', 'Tumbes', 'Ucayali' ], departamentosSolos:[],
+			variable1:'cont-variable', refTodos:null, refUsuario:null, logueado:false, nuevo:{nombres:'', apellidos:'', uid:'', level:1, }, texto:''
 		}
 	},
 	mounted(){
 		if(sessionStorage.getItem('uid')) this.extraerDatosLocal()
 		else this.comprobarLoginFireBase();
-		//this.cargarFirebase();
+		this.cargarDatos();
 	},
 	methods:{
+		cargarDatos(){
+			if(this.$route.params.filtro){
+				let texto = this.$route.params.filtro;
+				this.busqueda.texto = texto
+				this.buscarEmpleos();
+			}
+		
+			this.axios.post(this.servidor+'Ubigeo.php',{pedir: 'departamentos'})
+			.then(resp=> this.departamentosSolos = resp.data )
+		},
 		comprobarLoginFireBase(){
 				const auth = getAuth();
 				onAuthStateChanged(auth, async (user) => {
@@ -229,14 +237,18 @@ export default{
 			}); */
 
 		},
+		buscarGlobal(){
+			this.$router.push({ name: 'buscarTexto', params:{filtro: this.texto}});
+		},
 		cambiarDepartamento(index){
 			this.departamentoId=index;
 			if(index==-1){
 				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-geo-alt-fill"></i> Todo el país';
 			}else{
-				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-house"></i> '+this.departamentos[index].nombre;
+				document.getElementById('btnTodoPais').innerHTML = '<i class="bi bi-house"></i> '+ this.capitalizar(this.departamentosSolos[index].departamento);
 			}
-		}
+		},
+		capitalizar(text) { return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase(); },
 	}
 }
 </script>

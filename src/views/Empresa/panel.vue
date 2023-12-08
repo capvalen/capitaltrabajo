@@ -3,23 +3,24 @@
 		<h1>Bienvenido a su panel de administración</h1>
 		<p>Elija la categoría que desee información</p>
 		<div class="list-group col-6">
-			<a href="#" class="list-group-item list-group-item-action " aria-current="true">
+			<router-link :to="{name: 'editarDatosEmpresa'}" class="list-group-item list-group-item-action " aria-current="true">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1 text-primary"><i class="bi bi-building"></i> Modificar mis datos</h5>
 				</div>
 				<p class="ms-4 mb-1">Edite sus datos básicos para que la gente lo contacte</p>
-			</a>
+		</router-link>
+
 			<router-link :to="{name: 'publicar'}" class="list-group-item list-group-item-action " aria-current="true">
 				<div class="d-flex w-100 justify-content-between">
-					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un anuncio simple gratis</h5>
+					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un aviso personal</h5>
 				</div>
-				<p class="ms-4 mb-1">Cree una publicación de trabajo de un solo puesto</p>
+				<p class="ms-4 mb-1">Cree una publicación de trabajo de un solo puesto especializado</p>
 			</router-link>
 			
 		
 			<a href="#" class="list-group-item list-group-item-action " aria-current="true">
 				<div class="d-flex w-100 justify-content-between">
-					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un anuncio compuesto</h5>
+					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un aviso por paquete de trabajadores</h5>
 				</div>
 				<p class="ms-4 mb-1">Cree una publicación con varios puestos de trabajo</p>
 			</a>

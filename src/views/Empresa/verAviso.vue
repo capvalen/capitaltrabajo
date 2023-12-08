@@ -1,8 +1,8 @@
 <template>
-	<div v-if="aviso.id && (aviso.publico==1 || aviso.activo==0)">
+	<div class="container" v-if="aviso.id && (aviso.publico==1 || aviso.activo==0)">
 		<h3 class="">{{capitalizar(aviso.cargo)}}, {{ aviso.complemento }}</h3>
-		<div class="row row-cols-2">
-			<div class="col">
+		<div class="row ">
+			<div class="col-12">
 				<span>{{empresa.razonSocial}} <span class="text-warning"><i class="bi bi-star-fill"></i></span> <span>4.8</span> </span> 
 				<span class="mx-3" v-if="aviso.versueldo==0">Sueldo a tratar</span>
 				<span class="mx-3" v-else>S/ {{parseFloat(aviso.sueldo).toFixed(2)}}</span>
@@ -14,46 +14,44 @@
 		</div>
 
 		<div class="row row-cols-2 my-3">
-			
-
 			<div class="col">
 				<h5 class="text-muted mb-3">Acerca del puesto</h5>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Requisitos </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Requisitos </div>
 				<div class="ms-4">
 					<p v-if="aviso.requisitos" class="mb-0" v-html="aviso.requisitos.replace(/\n/g, '<br>')"></p>
 					<p v-else>No se solicita</p>
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Funciones </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Funciones </div>
 				<div class="ms-4">
 					<p v-if="aviso.funciones" class="mb-0" v-html="aviso.funciones.replace(/\n/g, '<br>')"></p>
 					<p v-else>No se solicita</p>
 
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Competencias y habilidades </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Competencias y habilidades </div>
 				<div class="ms-4">
 					<p v-if="aviso.competencias" class="mb-0" v-html="aviso.competencias.replace(/\n/g, '<br>')"></p>
 					<p v-else>No se solicita</p>
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Destrezas </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Destrezas </div>
 				<div class="ms-4">
 					<p v-if="aviso.destrezas" class="mb-0" v-html="aviso.destrezas.replace(/\n/g, '<br>')"></p>
 					<p v-else>No se solicita</p>
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Beneficios </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Beneficios </div>
 				<div class="ms-4">
 					<p v-if="aviso.beneficios" class="mb-0" v-html="aviso.beneficios.replace(/\n/g, '<br>')"></p>
 					<p v-else>No se solicita</p>
 					<p class="mb-0">Discapacitados: <span>{{ aviso.discapacitado == 1? 'Si': 'No' }}</span> </p>
 
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Tiempo del puesto </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Tiempo del puesto </div>
 				<div class="ms-4">
 					<p class="mb-0" v-if="aviso.tiempo==-1">No especifica</p>
 					<p class="mb-0" v-if="aviso.tiempo==1">Jornada extraordinaria</p>
 					<p class="mb-0" v-if="aviso.tiempo==2">Medio Tiempo</p>
 					<p class="mb-0" v-if="aviso.tiempo==3">Tiempo completo</p>
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Requerimientos </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Requerimientos </div>
 				<div class="ms-4">
 					<p class="mb-0">Años de experiencia: 
 						<span v-if="aviso.experiencia == -1">No requiere experiencia</span>
@@ -72,7 +70,7 @@
 					<p class="mb-0">Disponibilidad de viaje: <span>{{ aviso.viaje==1? 'Si': 'No' }}</span> </p>
 					<p class="mb-0">Cambio de residencia: <span>{{ aviso.residencia==1? 'Si': 'No' }}</span> </p>
 				</div>
-				<div class="encabezado py-2 px-3 my-2 w-50"> Oferta </div>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Oferta </div>
 				<div class="ms-4">
 					<p class="mb-0">Puestos: {{ aviso.vacantes }}</p>
 					<p class="mb-0">Salario: 
@@ -91,7 +89,7 @@
 				<h5 class="text-muted">Acerca de la empresa contratante</h5>
 				<h3>{{empresa.razonSocial}}</h3>
 				<h3 v-if="empresa.comercial">{{empresa.comercial}}</h3>
-				<div class="row w-50">
+				<div class="row w-75">
 					<div class="col-6 my-3">
 						<img :src="'/images/logos/'+empresa.logo" class="img-fluid ">
 					</div>

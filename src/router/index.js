@@ -9,7 +9,9 @@ const routes = [
 	{
 		path: '/buscador', name: 'Buscador', component: Buscador
 	},
-	
+	{
+		path: '/buscador/termino/:filtro', name: 'buscarTexto', component: Buscador
+	},
 	{
 		path: '/empresas/lista', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
 	},
@@ -48,6 +50,9 @@ const routes = [
 	},
 	{
 		path: '/empresas/mis-ofertas', name: 'misOfertas', component: () => import('../views/Empresa/misOfertas.vue')
+	},
+	{
+		path: '/empresas/editar/mis-datos', name: 'editarDatosEmpresa', component: () => import('../views/Empresa/modificarDatos.vue')
 	},
 	
 	

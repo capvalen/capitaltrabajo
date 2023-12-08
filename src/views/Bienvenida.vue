@@ -29,7 +29,7 @@
 				<div class="encabezado py-2 px-3"> Publicar aviso </div>
 				<p class="p-3">En Capital de Trabajo su empresa podrá publicar todas sus ofertas de empleo gratis, crear una página web con los datos de su empresa , y buscar entre miles de currículos a los mejores profesionales del país.</p>
 				<div class="d-flex justify-content-center mx-auto">
-					<button class="btn btn-primary" @click="$router.push({name: 'publicar'})">Publicar aviso</button>
+					<button class="btn btn-primary" @click="$router.push({name: 'publicarComplejo'})">Publicar aviso</button>
 				</div>
 
 			</div>

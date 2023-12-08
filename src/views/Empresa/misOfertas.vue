@@ -7,6 +7,7 @@
 				<tr>
 					<th>N°</th>
 					<th>Título</th>
+					<th>Tipo</th>
 					<th>Fecha inicial</th>
 					<th>Fecha final</th>
 					<th>Estado</th>
@@ -16,7 +17,11 @@
 			<tbody>
 				<tr v-for="(oferta, index) in ofertas">
 					<td>{{index+1}}</td>
-					<td>{{capitalizar(oferta.cargo)}}, {{oferta.complemento}}</td>
+					<td>{{capitalizar(oferta.cargo)}} <span v-if="oferta.tipo==0" >, {{oferta.complemento}}</span></td>
+					<td>
+						<span v-if="oferta.tipo==1">Simple</span>
+						<span v-if="oferta.tipo==0">Compuesto</span>
+					</td>
 					<td>{{ fechaLatam(oferta.inicio) }}</td>
 					<td>{{ fechaLatam(oferta.fin) }}</td>
 					<td>

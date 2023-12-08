@@ -66,7 +66,7 @@
 				</div>
 				<div class="encabezado py-2 px-3"> Envío de ofertas </div>
 				<div>
-					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'publicar'}">Oferta nueva</router-link></p>
+					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'publicarComplejo'}">Oferta nueva</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem"><router-link class="text-decoration-none" :to="{name: 'misOfertas'}">Ver ofertas</router-link></p>
 					<p class="py-1 ps-4 m-0 subItem pb-4"><a class="text-decoration-none" href="#">Mejorar alcance</a></p>
 				</div>

@@ -15,11 +15,10 @@ const routes = [
 	{
 		path: '/empresas/lista', name: 'listaEmpresas', component: () => import('../views/Empresa/listas.vue')
 	},
+	{ path: '/publicar/anuncio/avanzado', name: 'publicarComplejo', component: () => import('../views/Empresa/publicarComplejo.vue') },
+	{ path: '/publicar/anuncio/simple', name: 'publicarSimple', component: () => import('../views/Empresa/publicarSimple.vue') },
 	{
-		path: '/anuncio/publicar/anuncio/simple', name: 'publicar', component: () => import('../views/Empresa/publicar.vue')
-	},
-	{
-		path: '/anuncio/editar/anuncio/simple/:corto', name: 'editarAnuncioSimpple', component: () => import('../views/Empresa/publicar.vue')
+		path: '/anuncio/editar/anuncio/simple/:corto', name: 'editarAnuncioSimpple', component: () => import('../views/Empresa/publicarComplejo.vue')
 	},
 	{
 		path: '/empresas/login', name: 'loginEmpresa', component: () => import('../views/Empresa/login.vue')
@@ -39,9 +38,8 @@ const routes = [
 	{
 		path: '/candidato/mis-postulaciones/', name: 'verDondePostule', component: () => import('../views/Candidato/misPostulados.vue')
 	},
-	{
-		path: '/aviso/:id', name: 'verAviso', component: () => import('../views/Empresa/verAviso.vue')
-	},
+	{ path: '/aviso/:id', name: 'verAviso', component: () => import('../views/Empresa/verAviso.vue') },
+	{ path: '/aviso/simple/:id', name: 'verAviso.simple', component: () => import('../views/Empresa/verAvisoSimple.vue') },
 	{
 		path: '/empresas/panel', name: 'verPanel', component: () => import('../views/Empresa/panel.vue')
 	},

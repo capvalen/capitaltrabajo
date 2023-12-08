@@ -10,20 +10,20 @@
 				<p class="ms-4 mb-1">Edite sus datos básicos para que la gente lo contacte</p>
 		</router-link>
 
-			<router-link :to="{name: 'publicar'}" class="list-group-item list-group-item-action " aria-current="true">
+			<router-link :to="{name: 'publicarComplejo'}" class="list-group-item list-group-item-action " aria-current="true">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un aviso personal</h5>
 				</div>
 				<p class="ms-4 mb-1">Cree una publicación de trabajo de un solo puesto especializado</p>
 			</router-link>
 			
-		
-			<a href="#" class="list-group-item list-group-item-action " aria-current="true">
+			<router-link :to="{name: 'publicarSimple'}" class="list-group-item list-group-item-action " aria-current="true">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1"><i class="bi bi-file-check"></i> Crear un aviso por paquete de trabajadores</h5>
 				</div>
 				<p class="ms-4 mb-1">Cree una publicación con varios puestos de trabajo</p>
-			</a>
+			</router-link>
+			
 			<router-link :to="{name: 'misOfertas'}" class="list-group-item list-group-item-action ">
 				<div class="d-flex w-100 justify-content-between">
 					<h5 class="mb-1"><i class="bi bi-card-checklist"></i> Ver mis publicaciones activas</h5>
@@ -55,7 +55,7 @@ export default {
 	props:['usuario'],
 	data() {
 		return {
-			
+			areasAgrupadas:[]
 		}
 	},
 	mounted() {

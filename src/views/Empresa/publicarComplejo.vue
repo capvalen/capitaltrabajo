@@ -1,8 +1,8 @@
 <template>
 	<div class="container">
-		<h3 v-if="corto==null">Publica tu aviso</h3>
+		<h3 v-if="corto==null">Publica tu aviso avanzado</h3>
 		<h3 v-else>Actualiza tu aviso</h3>
-		<div class="encabezado py-2 px-3 my-4 w-75"> Visibilidad del aviso simple </div>
+		<div class="encabezado py-2 px-3 my-4 w-75"> Visibilidad del aviso </div>
 		<div class="container">
 			<div class="row my-2">
 				<div class="col-3">Urgente</div>
@@ -483,7 +483,7 @@
 						this.publicacion.bancoPreguntas.push(this.question);
 			},
 			publicar(){
-				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'publicarSimple', publicacion:this.publicacion})
+				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'publicarComplejo', publicacion:this.publicacion})
 				.then(resp=> {
 					if(resp.data.mensaje=='guardado'){
 						//modal llamar

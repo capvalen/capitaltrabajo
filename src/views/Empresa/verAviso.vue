@@ -1,5 +1,5 @@
 <template>
-	<div class="container" v-if="aviso.id && (aviso.publico==1 || aviso.activo==0)">
+	<div class="container" v-if="aviso.id && aviso.tipo==0 && (aviso.publico==1 || aviso.activo==0)">
 		<h3 class="">{{capitalizar(aviso.cargo)}}, {{ aviso.complemento }}</h3>
 		<div class="row ">
 			<div class="col-12">

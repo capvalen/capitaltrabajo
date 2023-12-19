@@ -21,6 +21,15 @@
 				</div>
 			</div>
 			<div class="row my-2">
+				<div class="col-3 my-2">Nivel</div>
+				<div class="col ">
+					<select name="" id="sltAreas" v-model="publicacion.area">
+						<option value="-1">Seleccione el nivel de postulantes</option>
+						<option v-for="nivel in niveles" :value="nivel.id">{{nivel.nivel}}</option>
+					</select>
+				</div>
+			</div>
+			<div class="row my-2">
 				<div class="col-3">Departamento</div>
 				<div class="col ">
 					<select name="" id="sltDepartamento" @change="cargarProvincia()" v-model="publicacion.idDepartamento">
@@ -42,7 +51,7 @@
 			<div class="row my-2">
 				<div class="col-3">Descripción o anotaciones adicionales</div>
 				<div class="col-7">
-					<textarea class="form-control" id="funciones" rows="3" v-model="publicacion.funciones"></textarea>
+					<textarea class="form-control" id="funciones" rows="2" v-model="publicacion.funciones"></textarea>
 				</div>
 			</div>
 			<div class="row my-2">
@@ -56,9 +65,21 @@
 		<div class="encabezado py-2 px-3 my-4 w-75  Razón"> Razón del aviso</div>
 		<div class="container ">
 			<div class="row my-2">
-				<div class="col-3">Razón, detalles, dirección, etc.</div>
+				<div class="col-3">Dirección de entrega de CV's o contacto</div>
 					<div class="col-7">
-						<textarea class="form-control" id="txtRazon" rows="4" placeholder="Dirección, celulares de contacto, requisitos" v-model="publicacion.complemento"></textarea>
+						<textarea class="form-control" id="txtRazon" rows="2" placeholder="Dirección de contacto, requisitos" v-model="publicacion.complemento" @input="validarLongitud()"></textarea>
+					</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-3">Mostrar dirección de empresa</div>
+					<div class="col-7">
+						<input type="text" v-model="publicacion.razonDireccion">
+					</div>
+			</div>
+			<div class="row my-2">
+				<div class="col-3">Mostrar celular de contacto</div>
+					<div class="col-7">
+						<input type="text" v-model="publicacion.razonCelular">
 					</div>
 			</div>
 		</div>
@@ -121,8 +142,8 @@
 				licencias:[ 'Sin permiso', 'A1', 'A2', 'A3', 'A4', 'A5', 'B', 'C', 'D', 'E', 'F' ],
 				question:'',  areas:[], departamentos:[], provincias:[],
 				publicacion:{id:null,idEmpresa:1, urgente:0, correo:1, celular:1, direccion:1, whatsapp:1, cargo:'', complemento:'', idDepartamento:-1, idProvincia:-1, jornada:-1, contrato:-1, sueldo:0, versueldo:true,
-				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPersonal:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1, area:-1, simple:1, foto:''
-				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null
+				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPersonal:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1, area:-1, simple:1, foto:'', razonDireccion:'',razonCelular:''
+				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null, niveles:[]
 			}
 		},
 		mounted() {
@@ -135,6 +156,8 @@
 				const areas = JSON.parse(localStorage.getItem('areas'))
 				this.departamentos = JSON.parse(localStorage.getItem('departamentos'))
 				this.areas = areas.filter(x=> x.agrupado == '1')
+				this.axios.post(this.servidor+'Areas.php',{ pedir: 'listarNiveles'})
+				.then(resp => this.niveles = resp.data)
 			},
 			verAviso(){
 				let uid = this.$route.params.corto;
@@ -262,6 +285,18 @@
 					this.publicacion.bancoPersonal.splice(index, 1);
 				}
 			},
+			validarLongitud(maximo = 100) {
+				// Obtener la longitud del texto
+				this.publicacion.complemento= this.publicacion.complemento.replace("\n", "");
+				const longitud = this.publicacion.complemento.length;
+				if (longitud > maximo) this.publicacion.complemento = this.publicacion.complemento.substring(0, maximo);
+			},/* 
+			validarLongitudCelular(maximo = 15) {
+				// Obtener la longitud del texto
+				this.publicacion.celular= this.publicacion.complemento.replace("\n", "");
+				const longitud = this.publicacion.celular.length;
+				if (longitud > maximo) this.publicacion.celular = this.publicacion.celular.substring(0, maximo);
+			}, */
 			previewImg(){
 				const inputFile = document.getElementById('archivo');
 				const imagenPreview = document.getElementById('imgPreview');

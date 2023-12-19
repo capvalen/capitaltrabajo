@@ -69,7 +69,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">11. Sexo</div>
+			<div class="col-2">Sexo</div>
 			<div class="col">
 				<select id="" v-model="postulante.sexo">
 					<option value="1">Varón</option>
@@ -78,7 +78,7 @@
 			</div>
 		</div>
 		<div class="row my-2">
-			<div class="col-2">12. Estado civil</div>
+			<div class="col-2">Estado civil</div>
 			<div class="col">
 				<select id="" v-model="postulante.civil">
 					<option value="1">Soltero(a)</option>
@@ -94,7 +94,7 @@
 				<textarea cols="3" rows="3" style="width:50%;" v-model="postulante.destrezas"></textarea>
 			</div>
 		</div>
-		<div class="row my-2">
+		<div class="row my-2 d-none">
 			<div class="col-4">¿Está Ud. autorizado para trabajar en Perú?</div>
 			<div class="col">
 				<select id="" v-model="postulante.autorizado">

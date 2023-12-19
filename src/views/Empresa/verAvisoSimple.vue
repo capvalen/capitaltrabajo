@@ -16,55 +16,36 @@
 			<div class="col">
 				<h5 class="text-muted mb-3">Acerca del puesto</h5>
 				<div class="w-75"><img v-if="aviso.foto!=''" :src="'/images/simples/'+aviso.foto" class="img-fluid my-3 "></div>
-				<div class="encabezado py-2 px-3 my-2 w-75"> Detalles </div>
+			</div>
+			<div class="col">
+
+				<div class="encabezado py-2 px-3 my-2 w-75"> Funciones extras </div>
 				<div class="ms-4">
-					<p v-if="aviso.complemento" class="mb-0" v-html="aviso.complemento.replace(/\n/g, '<br>')"></p>
+					<p v-if="aviso.funciones" class="mb-0" v-html="capitalizar(aviso.funciones).replace(/\n/g, '<br>')"></p>
 					<p v-else>No se indicó</p>
 				</div>
-				<h5 class="text-muted mt-3">Área</h5>
+
+				<div class="encabezado py-2 px-3 my-2 w-75"> Detalles </div>
 				<div class="ms-4">
-					<span>{{ aviso.nomArea }}</span>
+					<p v-if="aviso.complemento" class="mb-0" v-html="capitalizar(aviso.complemento).replace(/\n/g, '<br>')"></p>
+					<p v-else>No se indicó</p>
 				</div>
+				
+				<h5 class="text-muted mt-3">Área</h5>
+				<div class="ms-4"> <span>{{ aviso.nomArea }}</span> </div>
+				<h5 class="text-muted mt-3">Ubicación</h5>
+				<div class="ms-4"> <span>{{ capitalizar(aviso.nomDepartamento) }} - {{ capitalizar(aviso.nomProvincia) }}</span> </div>
+				<h5 class="text-muted mt-3">Vacantes</h5>
+				<div class="ms-4"> <span>{{ aviso.vacantes == 1 ? '1 plaza' : aviso.vacantes+ ' plazas' }}</span> </div>
+				<h5 class="text-muted mt-3">Nivel</h5>
+				<div class="ms-4"> <span>Practicante</span> </div>
 				
 				<h5 class="text-muted mt-3">Personal solicitado</h5>
 				<ul class="ms-3">
-					<li vfor v-for="personal in personales">{{ personal.personal }}</li>
+					<li class="text-capitalize" vfor v-for="personal in personales">{{ personal.personal }}</li>
 				</ul>
 				
 				
-			</div>
-			<div class="col">
-				<h5 class="text-muted">Acerca de la empresa contratante</h5>
-				<h3>{{empresa.razonSocial}}</h3>
-				<h3 v-if="empresa.comercial">{{empresa.comercial}}</h3>
-				<div class="row w-75">
-					<div class="col-6 my-3">
-						<img :src="'/images/logos/'+empresa.logo" class="img-fluid ">
-					</div>
-					<div class="col-12">
-						<p><strong>RUC:</strong> {{empresa.ruc}}</p>
-						<p><strong>Dirección:</strong> {{empresa.direccion}}</p>
-						<p v-if="empresa.sede"><strong>Sede:</strong> {{empresa.sede}}</p>
-						<p>{{empresa.descripcion}}</p>
-						
-						<div v-if="aviso.activo==1" class="d-none">
-							<p v-if="empresa.correo"><strong>Correo:</strong> {{empresa.correo}}</p>
-							<p v-if="empresa.celular1 && aviso.whatsapp==1"><strong>Celular:</strong> {{empresa.celular1}}</p>
-							<p v-if="empresa.celular2 && aviso.whatsapp==1"><strong>Celular #2:</strong> {{empresa.celular2}}</p>
-							<p v-if="empresa.whatsapp && aviso.whatsapp==1"><strong>Whatsapp:</strong> {{empresa.whatsapp}}</p>
-							<p v-if="empresa.whatsapp2 && aviso.whatsapp==1"><strong>Whatsapp #2:</strong> {{empresa.whatsapp2}}</p>
-							<p v-if="empresa.contacto"><strong>Contacto:</strong> {{empresa.contacto}}</p>
-							<p v-if="empresa.puesto"><strong>Cargo:</strong> {{empresa.puesto}}</p>
-
-							<a v-if="aviso.whatsapp==1" :href="'https://wa.me/51'+empresa.whatsapp" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Contactar vía Whatsapp</a>
-							<a v-if="aviso.whatsapp==1" :href="'tel:'+empresa.celular1" target="_blank" class="btn btn-lg btn-outline-success ms-2 my-1"><i class="bi bi-whatsapp"></i> Realizar una llamada</a>
-							<button class="btn btn-lg btn-outline-primary ms-2 my-1"><i class="bi bi-diamond-half"></i> Postular al puesto</button>
-						</div>
-						<div v-else>
-							<p><i class="bi bi-stop-circle"></i> Ya no se aceptan postulantes</p>
-						</div>
-					</div>
-				</div>
 			</div>
 		</div>
 
@@ -102,7 +83,8 @@
 				})
 			},
 			capitalizar(text) {
-				return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+				if (text)
+					return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 			},
 			fechaLatam(fecha){ return moment(fecha).format('DD/MM/YYYY') },
 			horaLargo(fecha){ return moment(fecha).format('DD/MM/YYYY HH:mm a') }

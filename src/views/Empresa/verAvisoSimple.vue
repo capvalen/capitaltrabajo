@@ -1,51 +1,29 @@
 <template>
 	<div class="container" v-if="aviso.id && aviso.tipo==1 && (aviso.publico==1 || aviso.activo==0)">
-		<h3 class="">{{capitalizar(aviso.cargo)}}</h3>
-		<div class="row ">
-			<div class="col-12">
-				<span>{{empresa.razonSocial}} <span class="text-warning"><i class="bi bi-star-fill"></i></span> <span>4.8</span> </span> 
-				<span class="mx-3" >Sueldo a tratar</span>
-				<span class="mx-3">{{empresa.provincia}}, {{ empresa.departamento }}</span>
-			</div>
-			<div class="col ps-5 d-none">
-				<button class="btn btn-outline-primary btn-sm	px-4"><i class="bi bi-diamond-half"></i> Postular</button>
-			</div>
-		</div>
-
-		<div class="row row-cols-2 my-3">
+		<div class="w-100 px-md-5 mx-auto"><img v-if="aviso.foto!=''" :src="'/images/simples/'+aviso.foto" class="img-fluid my-3 "></div>
+		
+		<div class="row row-cols-1 row-cols-md-2 my-3">
+			
 			<div class="col">
 				<h5 class="text-muted mb-3">Acerca del puesto</h5>
-				<div class="w-75"><img v-if="aviso.foto!=''" :src="'/images/simples/'+aviso.foto" class="img-fluid my-3 "></div>
+				<h3 class="">{{capitalizar(aviso.cargo)}}</h3>
+
+				<div class="encabezado py-2 px-3 my-2 w-75"> Vacantes </div>
+				<div class="ms-4"> <span>{{ aviso.vacantes == 1 ? '1 plaza' : aviso.vacantes+ ' plazas' }}</span> </div>
+				
+				<div class="encabezado py-2 px-3 my-2 w-75"> Ubicación </div>
+				<div class="ms-4"> <span>{{ capitalizar(aviso.nomDepartamento) }} - {{ capitalizar(aviso.nomProvincia) }}</span> </div>
 			</div>
 			<div class="col">
+				<router-link  v-if="comprobarDueño()" :to="{ name: 'editarAnuncioSimple', params: { corto: aviso.corto } }"  class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i> Editar aviso</router-link>
 
-				<div class="encabezado py-2 px-3 my-2 w-75"> Funciones extras </div>
-				<div class="ms-4">
-					<p v-if="aviso.funciones" class="mb-0" v-html="capitalizar(aviso.funciones).replace(/\n/g, '<br>')"></p>
-					<p v-else>No se indicó</p>
-				</div>
-
-				<div class="encabezado py-2 px-3 my-2 w-75"> Detalles </div>
-				<div class="ms-4">
-					<p v-if="aviso.complemento" class="mb-0" v-html="capitalizar(aviso.complemento).replace(/\n/g, '<br>')"></p>
-					<p v-else>No se indicó</p>
-				</div>
-				
-				<h5 class="text-muted mt-3">Área</h5>
-				<div class="ms-4"> <span>{{ aviso.nomArea }}</span> </div>
-				<h5 class="text-muted mt-3">Ubicación</h5>
-				<div class="ms-4"> <span>{{ capitalizar(aviso.nomDepartamento) }} - {{ capitalizar(aviso.nomProvincia) }}</span> </div>
-				<h5 class="text-muted mt-3">Vacantes</h5>
-				<div class="ms-4"> <span>{{ aviso.vacantes == 1 ? '1 plaza' : aviso.vacantes+ ' plazas' }}</span> </div>
-				<h5 class="text-muted mt-3">Nivel</h5>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Nivel </div>
 				<div class="ms-4"> <span>Practicante</span> </div>
 				
-				<h5 class="text-muted mt-3">Personal solicitado</h5>
+				<div class="encabezado py-2 px-3 my-2 w-75"> Personal solicitado </div>
 				<ul class="ms-3">
-					<li class="text-capitalize" vfor v-for="personal in personales">{{ personal.personal }}</li>
+					<li class="text-capitalize" vfor v-for="personal in personales">{{ personal.personal.replace('* ', '') }}</li>
 				</ul>
-				
-				
 			</div>
 		</div>
 
@@ -76,7 +54,7 @@
 			verAviso(){
 				let uid = this.$route.params.id;
 
-				this.axios.post(this.servidor+'Anuncio.php', {pedir:'verAviso', corto: uid})
+				this.axios.post(this.servidor+'Anuncio.php', {pedir:'verAvisoSimple', corto: uid})
 				.then(resp =>{
 					this.aviso = resp.data.anuncio; this.empresa = resp.data.empresa; this.idiomas = resp.data.idiomas; this.licencias = resp.data.licencias;
 					this.personales = resp.data.personal;
@@ -87,7 +65,12 @@
 					return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
 			},
 			fechaLatam(fecha){ return moment(fecha).format('DD/MM/YYYY') },
-			horaLargo(fecha){ return moment(fecha).format('DD/MM/YYYY HH:mm a') }
+			horaLargo(fecha){ return moment(fecha).format('DD/MM/YYYY HH:mm a') },
+			comprobarDueño(){
+				if(this.$attrs.uid == this.empresa.uid){
+					return true
+				}else return false
+			}
 		},
 		computed: {
 			obtenerIdiomas() {
@@ -107,7 +90,7 @@
 			fechaDesdeFin(){
 				moment.locale('es')
 				return moment(this.aviso.fin).fromNow()
-			},
+			}
 		},
 	}
 </script>

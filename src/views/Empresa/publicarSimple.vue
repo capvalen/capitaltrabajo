@@ -23,7 +23,7 @@
 			<div class="row my-2">
 				<div class="col-3 my-2">Nivel</div>
 				<div class="col ">
-					<select name="" id="sltAreas" v-model="publicacion.area">
+					<select name="" id="sltNiveles" v-model="publicacion.nivel">
 						<option value="-1">Seleccione el nivel de postulantes</option>
 						<option v-for="nivel in niveles" :value="nivel.id">{{nivel.nivel}}</option>
 					</select>
@@ -42,13 +42,12 @@
 				<div class="col-3">Provincia</div>
 				<div class="col ">
 					<select name="" id="sltProvincias" v-model="publicacion.idProvincia" >
-						<option value="-1">Seleccione un departamento</option>
+						<option value="-1">Seleccione una provincia</option>
 						<option v-for="provincia in provincias" :value="provincia.idProv">{{provincia.provincia}}</option>
-
 					</select>
 				</div>
 			</div>
-			<div class="row my-2">
+			<div class="row my-2 d-none">
 				<div class="col-3">Descripción o anotaciones adicionales</div>
 				<div class="col-7">
 					<textarea class="form-control" id="funciones" rows="2" v-model="publicacion.funciones"></textarea>
@@ -67,13 +66,7 @@
 			<div class="row my-2">
 				<div class="col-3">Dirección de entrega de CV's o contacto</div>
 					<div class="col-7">
-						<textarea class="form-control" id="txtRazon" rows="2" placeholder="Dirección de contacto, requisitos" v-model="publicacion.complemento" @input="validarLongitud()"></textarea>
-					</div>
-			</div>
-			<div class="row my-2">
-				<div class="col-3">Mostrar dirección de empresa</div>
-					<div class="col-7">
-						<input type="text" v-model="publicacion.razonDireccion">
+						<input type="text" v-model="publicacion.razonDireccion" style="width: 80%;">
 					</div>
 			</div>
 			<div class="row my-2">
@@ -89,7 +82,7 @@
 			<div class="row my-2">
 				<div class="col-3">Imágen a adjuntar</div>
 					<div class="col-7">
-						<input type="file" ref="archivo" id="archivo" @change="previewImg()">
+						<input type="file" ref="archivo" id="archivo" @change="previewImg()" accept=".jpg, .jpeg">
 						<img src="" id="imgPreview" class="w-75 img-fluid mt-2">
 					</div>
 			</div>
@@ -109,8 +102,8 @@
 
 		<div class="row mt-3">
 			<div class="col-8 d-flex justify-content-center">
-				<button v-if="corto==null" class="btn btn-primary btn-lg" @click="publicar()"><i class="bi bi-cloud-upload"></i> Publicar anuncio</button>
-				<button v-else class="btn btn-outline-success btn-lg" @click="actualizar()"><i class="bi bi-arrow-clockwise"></i> Actualizar anuncio</button>
+				<button v-if="!editable" class="btn btn-primary btn-lg" @click="publicar()"><i class="bi bi-cloud-upload"></i> Publicar anuncio</button>
+				<button v-else class="btn btn-outline-success btn-lg" @click="update()"><i class="bi bi-arrow-clockwise"></i> Actualizar anuncio</button>
 			</div>
 		</div>
 
@@ -142,14 +135,16 @@
 				licencias:[ 'Sin permiso', 'A1', 'A2', 'A3', 'A4', 'A5', 'B', 'C', 'D', 'E', 'F' ],
 				question:'',  areas:[], departamentos:[], provincias:[],
 				publicacion:{id:null,idEmpresa:1, urgente:0, correo:1, celular:1, direccion:1, whatsapp:1, cargo:'', complemento:'', idDepartamento:-1, idProvincia:-1, jornada:-1, contrato:-1, sueldo:0, versueldo:true,
-				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPersonal:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1, area:-1, simple:1, foto:'', razonDireccion:'',razonCelular:''
-				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null, niveles:[]
+				inicio: moment().format('YYYY-MM-DD'), fin: moment().add(1,'week').format('YYYY-MM-DD'), vacantes:1, experiencia:-1, edadMinima:18, edadMaxima:55, estudios:-1, idiomas:["1"], destrezas:'', licencias:['Sin permiso'], viaje:1, bancoPersonal:[], tiempo:-1, requisitos:'',funciones:'',competencias:'',beneficios:'',oferta:'', residencia:2, discapacitado:2, corto:null, publico:1, area:-1, simple:1, foto:'', razonDireccion:'',razonCelular:'', nivel:7, fotoComplemento:''
+				}, idiomas:['Ninguno', 'Español','Inglés', 'Francés', 'Italiano', 'Otros'], corto:null, niveles:[], editable:false
 			}
 		},
 		mounted() {
 			this.cargarBasicos()
 			if(this.$route.params.corto)
 				this.verAviso()
+			else
+				this.editable = false
 		},
 		methods:{
 			cargarBasicos(){
@@ -160,29 +155,38 @@
 				.then(resp => this.niveles = resp.data)
 			},
 			verAviso(){
-				let uid = this.$route.params.corto;
+				let uid = this.$route.params.corto ;
 				this.corto = uid
-				this.axios.post(this.servidor+'Anuncio.php', {pedir:'verAviso', corto: uid})
+				this.axios.post(this.servidor+'Anuncio.php', {pedir:'verAvisoSimple', corto: uid})
 				.then(resp =>{
 					this.publicacion.id = resp.data.anuncio.id
 					this.publicacion.cargo = resp.data.anuncio.cargo
 					this.publicacion.idEmpresa = resp.data.anuncio.idEmpresa
-					this.publicacion.urgente = resp.data.anuncio.urgente
-					this.publicacion.correo = resp.data.anuncio.correo
-					this.publicacion.celular = resp.data.anuncio.celular
-					this.publicacion.direccion = resp.data.anuncio.direccion
-					this.publicacion.whatsapp = resp.data.anuncio.whatsapp
+					
 					this.publicacion.complemento = resp.data.anuncio.complemento
 					this.publicacion.idDepartamento = resp.data.anuncio.idDepartamento
-					this.publicacion.idProvincia = resp.data.anuncio.idProvincia
 					this.publicacion.jornada = resp.data.anuncio.jornada
 					this.publicacion.sueldo = resp.data.anuncio.sueldo
 					this.publicacion.area = resp.data.anuncio.area
+					this.publicacion.nivel = resp.data.anuncio.nivel
+					this.publicacion.vacantes = resp.data.anuncio.vacantes
 					this.publicacion.idiomas = resp.data.idiomas
 					this.publicacion.licencias = resp.data.licencias
 					this.publicacion.versueldo= resp.data.anuncio.versueldo =='1'? true : false
 					this.publicacion.corto= resp.data.anuncio.corto
+					this.publicacion.foto= resp.data.anuncio.foto
+					this.publicacion.razonDireccion = resp.data.anuncio.razonDireccion
+					this.publicacion.razonCelular = resp.data.anuncio.razonCelular
+					resp.data.personal.forEach(personal => {
+						this.publicacion.bancoPersonal.push(personal.personal)
+					});
 					this.publicacion.simple= 1
+					this.cargarProvincia();
+					this.publicacion.idProvincia = resp.data.anuncio.idProvincia
+
+					if(this.$attrs.usuario.uid == resp.data.empresa.idEmpresa)
+						this.editable = true
+					console.log(resp.data)
 				})
 			},
 			agregarpersonal(){
@@ -191,7 +195,7 @@
 					alert('El máximo de personals es 5')
 				else
 					if(this.question=prompt('¿Qué tipo de personal desea agregar?'))
-						this.publicacion.bancoPersonal.push(this.question);
+						this.publicacion.bancoPersonal.push('* '+this.question);
 			},
 			async subirANube(){
 				let archivo = this.$refs.archivo.files[0];
@@ -201,7 +205,7 @@
 					formData.append('ruta', 'images/simples');
 					formData.append('archivo', archivo);
 
-					await this.axios.post(this.servidor+'subirAdjunto.php', formData,{
+					await this.axios.post(this.servidor+'subirAdjunto.php?v=1', formData,{
 						headers: { 'Content-Type' : 'multipart/form-data' }
 					})
 					.then( response => {
@@ -211,9 +215,12 @@
 							this.publicacion.foto ='';
 							console.error( 'err subida' );
 						}else{ //subió bien
-							this.publicacion.foto = nomArchivo;
-							this.registrar()
+							this.publicacion.fotoComplemento = nomArchivo;
 							console.info( '%cSubió bien al indice con nombre: '+ nomArchivo, 'color: blue' );
+							if(!this.editable)
+								this.registrar()
+							else
+							 this.actualizar()
 						}
 					})
 					.catch(function(ero){
@@ -228,22 +235,37 @@
 				else
 					this.registrar()
 			},
+			update(){
+				if(this.$refs.archivo.files[0])
+					this.subirANube()
+				else
+					this.actualizar()
+			},
 			registrar(){
-				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'publicarSimple', publicacion:this.publicacion})
+				let ubigeo = {departamento:'', provincia:''}
+				ubigeo.departamento = (this.publicacion.idDepartamento==-1) ? '' : document.querySelector("#sltDepartamento").options[document.querySelector("#sltDepartamento").selectedIndex].textContent;
+				ubigeo.provincia = (this.publicacion.idProvincia==-1) ? '' : document.querySelector("#sltProvincias").options[document.querySelector("#sltProvincias").selectedIndex].textContent;
+				let experiencia =document.querySelector("#sltNiveles").options[document.querySelector("#sltNiveles").selectedIndex].textContent;
+				
+				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'publicarSimple', publicacion:this.publicacion, ubigeo, experiencia})
 				.then(resp=> {
 					if(resp.data.mensaje=='guardado'){
 						//modal llamar
 						this.corto = resp.data.corto;
 						var miModal = new bootstrap.Modal(document.getElementById('modalPublicacion'));
 						miModal.show();
-
 					}else{
 						alertify.error('Hubo un error intentando guardar, inténtelo más tarde')
 					}
 				})
 			},
 			actualizar(){
-				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'actualizarSimple', publicacion:this.publicacion})
+				let ubigeo = {departamento:'', provincia:''}
+				ubigeo.departamento = (this.publicacion.idDepartamento==-1) ? '' : document.querySelector("#sltDepartamento").options[document.querySelector("#sltDepartamento").selectedIndex].textContent;
+				ubigeo.provincia = (this.publicacion.idProvincia==-1) ? '' : document.querySelector("#sltProvincias").options[document.querySelector("#sltProvincias").selectedIndex].textContent;
+				let experiencia =document.querySelector("#sltNiveles").options[document.querySelector("#sltNiveles").selectedIndex].textContent;
+
+				this.axios.post(this.servidor+'Anuncio.php', {pedir: 'actualizarSimple', publicacion:this.publicacion, ubigeo, experiencia})
 				.then(resp=> {
 					if(resp.data.mensaje=='actualizado'){
 						//modal llamar

@@ -17,9 +17,8 @@ const routes = [
 	},
 	{ path: '/publicar/anuncio/avanzado', name: 'publicarComplejo', component: () => import('../views/Empresa/publicarComplejo.vue') },
 	{ path: '/publicar/anuncio/simple', name: 'publicarSimple', component: () => import('../views/Empresa/publicarSimple.vue') },
-	{
-		path: '/anuncio/editar/anuncio/simple/:corto', name: 'editarAnuncioSimpple', component: () => import('../views/Empresa/publicarComplejo.vue')
-	},
+	{ path: '/anuncio/editar/anuncio/avanzado/:corto', name: 'editarAnuncioComplejo', component: () => import('../views/Empresa/publicarComplejo.vue') },
+	{ path: '/anuncio/editar/anuncio/simple/:corto', name: 'editarAnuncioSimple', component: () => import('../views/Empresa/publicarSimple.vue') },
 	{
 		path: '/empresas/login', name: 'loginEmpresa', component: () => import('../views/Empresa/login.vue')
 	},
@@ -57,6 +56,8 @@ const routes = [
 ]
 
 const router = createRouter({
+	hashbang: false,
+	mode:'html5',
 	history: createWebHistory(process.env.BASE_URL),
 	routes
 })
